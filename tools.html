@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Tools | MN ZONEX 2.0</title>
+
+  <!-- Primary Meta Tags -->
+  <meta name="title" content="Smart Tools | MN ZONEX 2.0">
+  <meta name="description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta name="theme-color" content="#00e5ff">
+  
+  <!-- Canonical Url -->
+  <link rel="canonical" href="https://mnzonex.github.io/tools.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mnzonex.github.io/tools.html">
+  <meta property="og:title" content="Smart Tools | MN ZONEX 2.0">
+  <meta property="og:description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta property="og:image" content="https://mnzonex.github.io/assets/images/branding/mnzonex-512x512.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://mnzonex.github.io/tools.html">
+  <meta property="twitter:title" content="Smart Tools | MN ZONEX 2.0">
+  <meta property="twitter:description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta property="twitter:image" content="https://mnzonex.github.io/assets/images/branding/mnzonex-512x512.png">
+
+  <!-- Favicon & App Icons -->
+  <link rel="icon" type="image/x-icon" href="assets/images/branding/mnzonex-favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/branding/mnzonex-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/images/branding/mnzonex-favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/images/branding/mnzonex-apple-icon.png">
+  <link rel="manifest" href="assets/images/branding/mnzonex.webmanifest">
+
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/layout.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/animations.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+
+    <style>
+        .page-header {
+            padding: 150px 0 60px;
+            text-align: center;
+            background: radial-gradient(circle at 50% 0%, var(--primary-glow), transparent 70%);
+        }
+
+        /* Filter Controls */
+        .filter-controls {
+            margin-bottom: 50px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .search-box {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 18px 20px 18px 55px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            color: #fff;
+            font-family: inherit;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.1);
+        }
+
+        .category-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            color: #ccc;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .filter-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border-color: #fff;
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: #000;
+            border-color: var(--primary);
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 50px;
+            color: var(--text-muted);
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header class="navbar navbar-scrolled">
+        <div class="logo" onclick="window.location.href='index.html'" style="cursor:pointer">MN ZONEX<span> 2.0</span>
+        </div>
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="games.html">Games</a>
+            <a href="services.html">Services</a>
+            <a href="business.html">Business</a>
+            <a href="network.html">Releases</a>
+            <a href="social.html">Social</a>
+            <a href="tools.html" class="active">Tools</a>
+            <a href="feedback.html">Feedback</a>
+        </nav>
+        <div class="mobile-menu-btn">
+            <i class="fa-solid fa-bars-staggered"></i>
+        </div>
+    </header>
+
+    <header class="page-header">
+        <div class="container">
+            <h1 class="hero-title" style="font-size: 56px;">Smart Tools</h1>
+            <p class="hero-subtitle" style="margin: 0 auto;">A collection of essential utilities to enhance your digital
+                workflow.</p>
+        </div>
+    </header>
+
+    <section class="section-padding">
+        <div class="container">
+            <!-- Search and Filter -->
+            <div class="filter-controls">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="toolSearch"
+                        placeholder="Search for tools (e.g. calculator, qr, converter)..." oninput="filterTools()">
+                </div>
+                <div class="category-filters" id="categoryFilters">
+                    <button class="filter-btn active" onclick="setCategory('All', this)">All</button>
+                    <button class="filter-btn" onclick="setCategory('Design', this)">Design</button>
+                    <button class="filter-btn" onclick="setCategory('Developer', this)">Developer</button>
+                    <button class="filter-btn" onclick="setCategory('Content', this)">Content</button>
+                    <button class="filter-btn" onclick="setCategory('Math', this)">Math & Finance</button>
+                    <button class="filter-btn" onclick="setCategory('Utilities', this)">Utilities</button>
+                </div>
+            </div>
+
+            <div class="cards-grid" id="tools-container">
+                <!-- AI Injected Content -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container text-center">
+            <div class="logo" style="margin-bottom: 20px;">MN ZONEX<span> 2.0</span></div>
+            <p style="font-size: 13px; color: #555;">&copy; 2026 MN ZONEX. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+    <script>
+        const tools = [
+            { name: "Color Picker", desc: "Pick and export HEX/RGB colors instantly.", icon: "fa-solid fa-palette", link: "tools/color-picker.html", cat: "Design" },
+            { name: "QR Generator", desc: "Create high-resolution QR codes from any text.", icon: "fa-solid fa-qrcode", link: "tools/qr-generator.html", cat: "Developer" },
+            { name: "Speed Test", desc: "Check your internet download and upload performance.", icon: "fa-solid fa-gauge-high", link: "tools/internet-speed-test.html", cat: "Utilities" },
+            { name: "Text Converter", desc: "Switch text between UPPER/lower/Capital formats.", icon: "fa-solid fa-font", link: "tools/uppercase.html", cat: "Content" },
+            { name: "Random Number", desc: "Generate secure random numbers for any use case.", icon: "fa-solid fa-shuffle", link: "tools/random-number.html", cat: "Developer" },
+            { name: "Char Counter", desc: "Count words, characters, and spaces in your text.", icon: "fa-solid fa-calculator", link: "tools/char-counter.html", cat: "Content" },
+            { name: "Fast Copy", desc: "Quickly copy large blocks of text with one click.", icon: "fa-solid fa-copy", link: "tools/copy-text.html", cat: "Utilities" },
+            { name: "Global Clock", desc: "Check current date and time with UTC offsets.", icon: "fa-solid fa-clock", link: "tools/date-time.html", cat: "Utilities" },
+            { name: "Password Gen", desc: "Generate ultra-secure random passwords.", icon: "fa-solid fa-key", link: "tools/password-gen.html", cat: "Developer" },
+            { name: "Unit Converter", desc: "Convert length, weight, and temp between units.", icon: "fa-solid fa-ruler-combined", link: "tools/unit-conv.html", cat: "Math" },
+            { name: "IP Checker", desc: "Detect your public IP and network location data.", icon: "fa-solid fa-earth-americas", link: "tools/ip-check.html", cat: "Utilities" },
+            { name: "Lorem Ipsum", desc: "Generate placeholder text for design mockups.", icon: "fa-solid fa-align-left", link: "tools/lorem-ipsum.html", cat: "Content" },
+            { name: "Binary/Text", desc: "Convert text into binary code and vice versa.", icon: "fa-solid fa-code-branch", link: "tools/binary-conv.html", cat: "Developer" },
+            { name: "Markdown Pro", desc: "Write and preview Markdown code in real-time.", icon: "fa-brands fa-markdown", link: "tools/markdown.html", cat: "Content" },
+            { name: "BMI Calc", desc: "Calculate your Body Mass Index for better health.", icon: "fa-solid fa-weight-scale", link: "tools/bmi.html", cat: "Math" },
+            { name: "Scientific Calc", desc: "Full-featured scientific calculator for complex math.", icon: "fa-solid fa-square-root-variable", link: "tools/calculator.html", cat: "Math" },
+            { name: "Age Calculator", desc: "Calculate exact age in years, months, and days.", icon: "fa-solid fa-calendar-day", link: "tools/age-calc.html", cat: "Utilities" },
+            { name: "Morse Code", desc: "Convert text to Morse code for unique messages.", icon: "fa-solid fa-ellipsis-h", link: "tools/morse.html", cat: "Developer" },
+            { name: "Base64 Tool", desc: "Securely encode or decode strings to Base64.", icon: "fa-solid fa-shield-halved", link: "tools/base64.html", cat: "Developer" },
+            { name: "JSON Format", desc: "Prettify and validate JSON data for easy reading.", icon: "fa-solid fa-code", link: "tools/json-format.html", cat: "Developer" },
+            { name: "Aspect Ratio", desc: "Calculate perfect dimensions for videos and images.", icon: "fa-solid fa-expand", link: "tools/aspect-ratio.html", cat: "Design" },
+            { name: "Stopwatch", desc: "Precision stopwatch and countdown timer.", icon: "fa-solid fa-stopwatch", link: "tools/stopwatch.html", cat: "Utilities" },
+            { name: "Word Scramble", desc: "Anagram generator for word games and puzzles.", icon: "fa-solid fa-font-awesome", link: "tools/scramble.html", cat: "Utilities" },
+            { name: "Emoji Finder", desc: "Search and copy emojis instantly for any app.", icon: "fa-solid fa-face-smile", link: "tools/emoji.html", cat: "Utilities" },
+            { name: "Notes Pad", desc: "Simple, local storage notepad for quick thoughts.", icon: "fa-solid fa-note-sticky", link: "tools/notes.html", cat: "Content" },
+            { name: "Gradient Gen", desc: "Create beautiful CSS linear and radial gradients.", icon: "fa-solid fa-fill-drip", link: "tools/gradient.html", cat: "Design" },
+            { name: "Box Shadow", desc: "Design and preview advanced CSS box shadows.", icon: "fa-solid fa-layer-group", link: "tools/shadow.html", cat: "Design" },
+            { name: "Loan/EMI", desc: "Calculate monthly loan payments and interest.", icon: "fa-solid fa-money-bill-wave", link: "tools/loan.html", cat: "Math" },
+            { name: "GST/Tax", desc: "Simple tax calculator for GST, VAT, and Sales Tax.", icon: "fa-solid fa-percent", link: "tools/tax.html", cat: "Math" },
+            { name: "Word Frequency", desc: "Analyze the most frequently used words in text.", icon: "fa-solid fa-chart-simple", link: "tools/word-freq.html", cat: "Content" },
+            { name: "Date Diff", desc: "Count days, weeks, and months between two dates.", icon: "fa-solid fa-calendar-alt", link: "tools/date-diff.html", cat: "Utilities" },
+            { name: "Text to Speech", desc: "Convert your written text into spoken audio.", icon: "fa-solid fa-volume-high", link: "tools/tts.html", cat: "Content" },
+            { name: "Speech to Text", desc: "Transcribe your spoken voice into written text.", icon: "fa-solid fa-microphone", link: "tools/stt.html", cat: "Content" },
+            { name: "Coin Flipper", desc: "A simple virtual coin toss for quick decisions.", icon: "fa-solid fa-coins", link: "tools/coin.html", cat: "Utilities" },
+            { name: "Dice Roller", desc: "Roll virtual dice for board games and luck.", icon: "fa-solid fa-dice", link: "tools/dice.html", cat: "Utilities" },
+            { name: "List Shuffler", desc: "Randomly reorder any list of items instantly.", icon: "fa-solid fa-list-ol", link: "tools/shuffle.html", cat: "Utilities" },
+            { name: "Dupe Remover", desc: "Find and remove duplicate lines from your text.", icon: "fa-solid fa-broom", link: "tools/dupe.html", cat: "Content" },
+            { name: "Text Sorter", desc: "Alphabetize and sort lines in text blocks.", icon: "fa-solid fa-sort-alpha-down", link: "tools/sort.html", cat: "Content" },
+            { name: "Space Cleaner", desc: "Remove extra spaces and formatting from text.", icon: "fa-solid fa-eraser", link: "tools/spaces.html", cat: "Content" },
+            { name: "URL Encoder", desc: "Encode or decode URLs for safe web sharing.", icon: "fa-solid fa-link-slash", link: "tools/url.html", cat: "Developer" },
+            { name: "HTML Entities", desc: "Convert special characters to HTML entity codes.", icon: "fa-solid fa-file-code", link: "tools/entities.html", cat: "Developer" },
+            { name: "Metronome", desc: "Simple rhythm tool with adjustable BPM speeds.", icon: "fa-solid fa-drum", link: "tools/metronome.html", cat: "Utilities" },
+            { name: "Tally Counter", desc: "Simple digital clicker to count anything on screen.", icon: "fa-solid fa-plus-minus", link: "tools/counter.html", cat: "Utilities" },
+            { name: "Grid Builder", desc: "Visual tool to create and preview CSS Grid layouts.", icon: "fa-solid fa-table-cells", link: "tools/grid.html", cat: "Design" },
+            { name: "Flexbox Pro", desc: "Interactive playground for CSS Flexbox designs.", icon: "fa-solid fa-object-group", link: "tools/flexbox.html", cat: "Design" },
+            { name: "Image Filter", desc: "Apply CSS filters like blur and grayscale to images.", icon: "fa-solid fa-wand-magic", link: "tools/filters.html", cat: "Design" },
+            { name: "Contrast Check", desc: "Check text readability and color contrast ratios.", icon: "fa-solid fa-eye", link: "tools/contrast.html", cat: "Design" },
+            { name: "Privacy Gen", desc: "Basic template for privacy policy documents.", icon: "fa-solid fa-user-shield", link: "tools/privacy.html", cat: "Utilities" },
+            { name: "Terms Gen", desc: "Standard template for Terms and Conditions docs.", icon: "fa-solid fa-scale-balanced", link: "tools/terms.html", cat: "Utilities" },
+            { name: "Sitemap Gen", desc: "Generate basic XML sitemap structures for SEO.", icon: "fa-solid fa-sitemap", link: "tools/sitemap.html", cat: "Developer" }
+        ];
+
+        let currentCategory = 'All';
+        const container = document.getElementById("tools-container");
+
+        function renderTools(filteredTools) {
+            let html = "";
+            if (filteredTools.length === 0) {
+                container.innerHTML = `<div class="no-results">No tools found matching your search.</div>`;
+                return;
+            }
+            filteredTools.forEach((t, index) => {
+                const delay = index * 0.03;
+                html += `
+                    <div class="tool-card reveal-on-scroll" style="transition-delay: ${delay}s">
+                        <div class="tool-info">
+                            <i class="${t.icon}" style="font-size: 40px; color: var(--primary); margin-bottom: 20px;"></i>
+                            <h4>${t.name}</h4>
+                            <p>${t.desc}</p>
+                            <a href="${t.link}" class="tool-btn">Open Tool</a>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+
+            // Re-trigger reveal animation for newly added tools
+            if (typeof reveal === 'function') {
+                setTimeout(reveal, 50);
+            }
+        }
+
+        function filterTools() {
+            const query = document.getElementById('toolSearch').value.toLowerCase();
+            const filtered = tools.filter(t => {
+                const matchesSearch = t.name.toLowerCase().includes(query) || t.desc.toLowerCase().includes(query);
+                const matchesCat = currentCategory === 'All' || t.cat === currentCategory;
+                return matchesSearch && matchesCat;
+            });
+            renderTools(filtered);
+        }
+
+        function setCategory(cat, btn) {
+            currentCategory = cat;
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            filterTools();
+        }
+
+        // Initial render
+        renderTools(tools);
+    </script>
+</body>
+
+</html>
