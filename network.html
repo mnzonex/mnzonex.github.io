@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Official Releases | MN ZONEX 2.0</title>
+
+  <!-- Primary Meta Tags -->
+  <meta name="title" content="Official Releases | MN ZONEX 2.0">
+  <meta name="description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta name="theme-color" content="#00e5ff">
+  
+  <!-- Canonical Url -->
+  <link rel="canonical" href="https://mnzonex.github.io/network.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mnzonex.github.io/network.html">
+  <meta property="og:title" content="Official Releases | MN ZONEX 2.0">
+  <meta property="og:description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta property="og:image" content="https://mnzonex.github.io/assets/images/branding/mnzonex-512x512.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://mnzonex.github.io/network.html">
+  <meta property="twitter:title" content="Official Releases | MN ZONEX 2.0">
+  <meta property="twitter:description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta property="twitter:image" content="https://mnzonex.github.io/assets/images/branding/mnzonex-512x512.png">
+
+  <!-- Favicon & App Icons -->
+  <link rel="icon" type="image/x-icon" href="assets/images/branding/mnzonex-favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/branding/mnzonex-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/images/branding/mnzonex-favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/images/branding/mnzonex-apple-icon.png">
+  <link rel="manifest" href="assets/images/branding/mnzonex.webmanifest">
+
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/layout.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/animations.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+
+    <style>
+        .page-header {
+            padding: 150px 0 60px;
+            text-align: center;
+            background: radial-gradient(circle at 50% 0%, var(--primary-glow), transparent 70%);
+        }
+
+        .network-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .network-card {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .network-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            transform: translateX(-100%);
+            transition: 0.6s;
+        }
+
+        .network-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .network-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 15px 35px rgba(0, 229, 255, 0.15);
+        }
+
+        .network-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(0, 229, 255, 0.1);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            font-size: 32px;
+            color: var(--primary);
+            transition: 0.4s;
+        }
+
+        .network-card:hover .network-icon {
+            background: var(--primary);
+            color: #000;
+            transform: rotateY(180deg);
+        }
+
+        .network-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .network-card p {
+            color: var(--text-muted);
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            flex-grow: 1;
+        }
+
+        .visit-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 30px;
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            border-radius: 100px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .network-card:hover .visit-btn {
+            background: var(--primary);
+            color: #000;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header class="navbar navbar-scrolled">
+        <div class="logo" onclick="window.location.href='index.html'" style="cursor:pointer">MN ZONEX<span> 2.0</span>
+        </div>
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="games.html">Games</a>
+            <a href="services.html">Services</a>
+            <a href="business.html">Business</a>
+            <a href="network.html" class="active">Releases</a>
+            <a href="social.html">Social</a>
+            <a href="tools.html">Tools</a>
+            <a href="feedback.html">Feedback</a>
+        </nav>
+        <div class="mobile-menu-btn">
+            <i class="fa-solid fa-bars-staggered"></i>
+        </div>
+    </header>
+
+    <header class="page-header">
+        <div class="container">
+            <h1 class="hero-title" style="font-size: 56px;">Official Releases</h1>
+            <p class="hero-subtitle" style="margin: 0 auto;">Discover the next generation of digital platforms and
+                innovative websites powered by MN ZONEX.</p>
+        </div>
+    </header>
+
+    <section class="section-padding">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 50px;">
+                <h2 style="font-size: 32px; color: #fff;">Latest Digital Projects</h2>
+                <p style="color: var(--text-muted);">Stay updated with our newest web applications and professional
+                    platforms.</p>
+            </div>
+
+            <div class="network-grid">
+                <!-- Placeholder for Future Websites -->
+                <div class="network-card reveal-on-scroll">
+                    <div class="network-icon" style="background: rgba(255, 255, 255, 0.05); color: #555;">
+                        <i class="fa-solid fa-plus"></i>
+                    </div>
+                    <h3>New Project</h3>
+                    <p>We are constantly expanding. More revolutionary platforms are currently under development.</p>
+                    <span class="visit-btn" style="border-color: #555; color: #555;">Coming Soon</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container text-center">
+            <div class="logo" style="margin-bottom: 20px;">MN ZONEX<span> 2.0</span></div>
+            <p style="font-size: 13px; color: #555;">&copy; 2026 MN ZONEX. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Clock | MN ZONEX 2.0</title>
+
+  <!-- Primary Meta Tags -->
+  <meta name="title" content="Global Clock | MN ZONEX 2.0">
+  <meta name="description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta name="theme-color" content="#00e5ff">
+  
+  <!-- Canonical Url -->
+  <link rel="canonical" href="https://mnzonex.github.io/tools/date-time.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mnzonex.github.io/tools/date-time.html">
+  <meta property="og:title" content="Global Clock | MN ZONEX 2.0">
+  <meta property="og:description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta property="og:image" content="https://mnzonex.github.io/assets/images/branding/mnzonex-512x512.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://mnzonex.github.io/tools/date-time.html">
+  <meta property="twitter:title" content="Global Clock | MN ZONEX 2.0">
+  <meta property="twitter:description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta property="twitter:image" content="https://mnzonex.github.io/assets/images/branding/mnzonex-512x512.png">
+
+  <!-- Favicon & App Icons -->
+  <link rel="icon" type="image/x-icon" href="../assets/images/branding/mnzonex-favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/branding/mnzonex-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/branding/mnzonex-favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/branding/mnzonex-apple-icon.png">
+  <link rel="manifest" href="../assets/images/branding/mnzonex.webmanifest">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/base.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+    <style>
+        body {
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            justify-content: center;
+            background: radial-gradient(circle at center, #111 0%, #000 100%);
+        }
+
+        .clock-card {
+            max-width: 500px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 50px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        #time {
+            font-size: 80px;
+            font-weight: 900;
+            color: #fff;
+            line-height: 1;
+            margin-bottom: 10px;
+            font-variant-numeric: tabular-nums;
+            text-shadow: 0 0 30px var(--primary-glow);
+        }
+
+        #date {
+            font-size: 20px;
+            color: var(--primary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+        }
+
+        .zones {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 30px;
+            padding-top: 30px;
+        }
+
+        .zone-item label {
+            display: block;
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+        }
+
+        .zone-item span {
+            font-weight: 700;
+            color: #fff;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="clock-card">
+        <div id="date">-- --- ----</div>
+        <div id="time">00:00:00</div>
+        <div class="zones">
+            <div class="zone-item">
+                <label>UTC Offset</label>
+                <span id="utc">UTC +0:00</span>
+            </div>
+            <div class="zone-item">
+                <label>Day</label>
+                <span id="dayname">---</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const h = String(now.getHours()).padStart(2, '0');
+            const m = String(now.getMinutes()).padStart(2, '0');
+            const s = String(now.getSeconds()).padStart(2, '0');
+
+            document.getElementById('time').innerText = `${h}:${m}:${s}`;
+
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('date').innerText = now.toLocaleDateString('en-US', options);
+
+            document.getElementById('dayname').innerText = now.toLocaleDateString('en-US', { weekday: 'long' });
+
+            const offset = -now.getTimezoneOffset() / 60;
+            document.getElementById('utc').innerText = `UTC ${offset >= 0 ? '+' : ''}${offset}:00`;
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+
+</html>

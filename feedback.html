@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Feedback | MN ZONEX 2.0</title>
+
+  <!-- Primary Meta Tags -->
+  <meta name="title" content="User Feedback | MN ZONEX 2.0">
+  <meta name="description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta name="theme-color" content="#00e5ff">
+  
+  <!-- Canonical Url -->
+  <link rel="canonical" href="https://mnzonex.github.io/feedback.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mnzonex.github.io/feedback.html">
+  <meta property="og:title" content="User Feedback | MN ZONEX 2.0">
+  <meta property="og:description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta property="og:image" content="https://mnzonex.github.io/assets/images/branding/mnzonex-512x512.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://mnzonex.github.io/feedback.html">
+  <meta property="twitter:title" content="User Feedback | MN ZONEX 2.0">
+  <meta property="twitter:description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta property="twitter:image" content="https://mnzonex.github.io/assets/images/branding/mnzonex-512x512.png">
+
+  <!-- Favicon & App Icons -->
+  <link rel="icon" type="image/x-icon" href="assets/images/branding/mnzonex-favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/branding/mnzonex-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/images/branding/mnzonex-favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/images/branding/mnzonex-apple-icon.png">
+  <link rel="manifest" href="assets/images/branding/mnzonex.webmanifest">
+
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/layout.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/animations.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+
+    <style>
+        .page-header {
+            padding: 150px 0 60px;
+            text-align: center;
+            background: radial-gradient(circle at 50% 0%, var(--primary-glow), transparent 70%);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header class="navbar navbar-scrolled">
+        <div class="logo" onclick="window.location.href='index.html'" style="cursor:pointer">MN ZONEX<span> 2.0</span>
+        </div>
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="games.html">Games</a>
+            <a href="services.html">Services</a>
+            <a href="business.html">Business</a>
+            <a href="network.html">Releases</a>
+            <a href="social.html">Social</a>
+            <a href="tools.html">Tools</a>
+            <a href="feedback.html" class="active">Feedback</a>
+        </nav>
+        <div class="mobile-menu-btn">
+            <i class="fa-solid fa-bars-staggered"></i>
+        </div>
+    </header>
+
+    <header class="page-header">
+        <div class="container">
+            <h1 class="hero-title" style="font-size: 56px;">Community Feedback</h1>
+            <p class="hero-subtitle" style="margin: 0 auto 30px;">Hear what our users have to say about the MN ZONEX
+                experience.</p>
+            <button class="btn btn-pulse" onclick="window.location.href='add-feedback.html'">Share Your
+                Thoughts</button>
+        </div>
+    </header>
+
+    <section class="section-padding">
+        <div class="container">
+            <div id="feedback-container">
+                <!-- AI Injected Content -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container text-center">
+            <div class="logo" style="margin-bottom: 20px;">MN ZONEX<span> 2.0</span></div>
+            <p style="font-size: 13px; color: #555;">&copy; 2026 MN ZONEX. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+    <script>
+        const feedbacks = [
+            { name: "Alex Johnson", text: "Very clean and professional website. The transition to 2.0 is incredible!", rating: 5, color: "var(--primary)" },
+            { name: "Ravi Kumar", text: "Animations are smooth. Love the dark theme and the new glassmorphism effects.", rating: 5, color: "#ff00cc" },
+            { name: "Sophia Wei", text: "Easy to navigate and visually appealing. The tools section is a lifesaver.", rating: 4, color: "#7000ff" },
+            { name: "Liam Smith", text: "The services section is very helpful and well-organized. Great job!", rating: 5, color: "#00ff88" },
+            { name: "Noah Miller", text: "Website loads fast and looks amazing on my mobile device. Highly recommended.", rating: 5, color: "#ffaa00" }
+        ];
+
+        const container = document.getElementById("feedback-container");
+
+        feedbacks.forEach((f, index) => {
+            let stars = "";
+            for (let i = 0; i < 5; i++) {
+                stars += `<i class="fa-solid fa-star" style="color: ${i < f.rating ? 'gold' : '#333'}"></i>`;
+            }
+
+            container.innerHTML += `
+        <div class="feedback-card reveal-on-scroll" style="transition-delay: ${index * 0.1}s">
+          <div class="feedback-header">
+            <div class="avatar" style="background: ${f.color}"></div>
+            <div>
+              <h4 style="margin: 0;">${f.name}</h4>
+              <div style="font-size: 12px; margin-top: 5px;">${stars}</div>
+            </div>
+          </div>
+          <p>"${f.text}"</p>
+        </div>
+      `;
+        });
+    </script>
+</body>
+
+</html>

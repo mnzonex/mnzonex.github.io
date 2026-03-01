@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doodle Jump - Master Edition</title>
+
+  <!-- Primary Meta Tags -->
+  <meta name="title" content="Doodle Jump - Master Edition">
+  <meta name="description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta name="theme-color" content="#00e5ff">
+  
+  <!-- Canonical Url -->
+  <link rel="canonical" href="https://mnzonex.github.io/games/game5/doodle-jump-game.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mnzonex.github.io/games/game5/doodle-jump-game.html">
+  <meta property="og:title" content="Doodle Jump - Master Edition">
+  <meta property="og:description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta property="og:image" content="https://mnzonex.github.io/assets/images/branding/mnzonex-512x512.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://mnzonex.github.io/games/game5/doodle-jump-game.html">
+  <meta property="twitter:title" content="Doodle Jump - Master Edition">
+  <meta property="twitter:description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta property="twitter:image" content="https://mnzonex.github.io/assets/images/branding/mnzonex-512x512.png">
+
+  <!-- Favicon & App Icons -->
+  <link rel="icon" type="image/x-icon" href="../../assets/images/branding/mnzonex-favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/images/branding/mnzonex-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/branding/mnzonex-favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../assets/images/branding/mnzonex-apple-icon.png">
+  <link rel="manifest" href="../../assets/images/branding/mnzonex.webmanifest">
+
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f4f1de;
+            --platform: #81b29a;
+            --doodler: #f2cc8f;
+            --ui-text: #3d405b;
+            --accent: #e07a5f;
+        }
+        body { 
+            margin: 0; background: #222; display: flex; flex-direction: column; 
+            align-items: center; justify-content: center; min-height: 100vh;
+            font-family: 'Quicksand', sans-serif; overflow-x: hidden; overflow-y: auto;
+        }
+        .ad-banner {
+            width: 90%; max-width: 320px; height: 50px; background: #333; color: #555;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 11px; margin: 10px 0; border-radius: 5px;
+        }
+        #game-container {
+            position: relative; width: 95vw; max-width: 400px;
+            height: 85vh; max-height: 600px;
+            background: var(--bg-color); border: 10px solid var(--ui-text);
+            border-radius: 30px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+        #ui-layer {
+            position: absolute; top: 20px; width: 100%; text-align: center;
+            pointer-events: none; z-index: 5;
+        }
+        #score { font-size: 40px; color: var(--ui-text); opacity: 0.6; margin: 0; }
+        #high-score { font-size: 14px; color: #8d99ae; text-transform: uppercase; }
+
+        /* Menu Overlays */
+        .overlay {
+            position: absolute; inset: 0; background: rgba(244, 241, 222, 0.95);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            z-index: 20; text-align: center;
+        }
+        #game-over-overlay { display: none; background: rgba(61, 64, 91, 0.9); color: white; }
+
+        .btn-main {
+            padding: 15px 45px; background: var(--accent); color: white; border: none;
+            border-radius: 50px; font-size: 22px; font-weight: bold; cursor: pointer;
+            box-shadow: 0 5px 0 #b35a42; transition: 0.1s; margin-top: 20px;
+        }
+        .btn-main:active { transform: translateY(3px); box-shadow: 0 2px 0 #b35a42; }
+
+        #controls { display: flex; gap: 30px; margin-top: 20px; }
+        .ctrl-btn {
+            width: 80px; height: 70px; background: var(--ui-text); color: white;
+            border: none; border-radius: 18px; font-size: 30px; cursor: pointer;
+            box-shadow: 0 6px 0 #111; transition: 0.1s;
+        }
+        .ctrl-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #111; background: var(--accent); }
+
+        footer { margin-top: auto; font-size: 12px; color: #777; }
+    </style>
+</head>
+<body>
+
+    <div class="ad-banner">GOOGLE AD BANNER</div>
+
+    <div id="game-container">
+        <div id="start-menu" class="overlay">
+            <h1 style="color: var(--ui-text); font-size: 45px; margin: 0;">DOODLE<br>JUMP</h1>
+            <p style="color: #8d99ae;">Jump to the top!</p>
+            <button class="btn-main" onclick="startGame()">PLAY NOW</button>
+        </div>
+
+        <div id="ui-layer">
+            <p id="score">0</p>
+            <p id="high-score">BEST: 0</p>
+        </div>
+
+        <canvas id="gameCanvas"></canvas>
+
+        <div id="game-over-overlay" class="overlay">
+            <h1 style="margin:0; font-size: 45px;">Oops!</h1>
+            <p id="final-score" style="font-size: 22px;">Score: 0</p>
+            <button class="btn-main" onclick="location.reload()">RETRY</button>
+        </div>
+    </div>
+
+    <div id="controls">
+        <button class="ctrl-btn" id="left">◀</button>
+        <button class="ctrl-btn" id="right">▶</button>
+    </div>
+
+    <footer>© 2026 MN ZONEX • All Rights Reserved</footer>
+
+<script>
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+canvas.width = 360; canvas.height = 580;
+
+let score = 0;
+let highScore = localStorage.getItem('doodle_best') || 0;
+document.getElementById('high-score').innerText = "BEST: " + highScore;
+let gameOver = false;
+let gameStarted = false;
+let platforms = [];
+let particles = [];
+
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+function playSound(freq, type, ramp, duration, volume = 0.08) {
+    if(audioCtx.state === 'suspended') audioCtx.resume();
+    const o = audioCtx.createOscillator();
+    const g = audioCtx.createGain();
+    o.type = type; o.frequency.setValueAtTime(freq, audioCtx.currentTime);
+    if(ramp) o.frequency.exponentialRampToValueAtTime(ramp, audioCtx.currentTime + duration);
+    o.connect(g); g.connect(audioCtx.destination);
+    g.gain.setValueAtTime(volume, audioCtx.currentTime);
+    g.gain.linearRampToValueAtTime(0, audioCtx.currentTime + duration);
+    o.start(); o.stop(audioCtx.currentTime + duration);
+}
+
+const player = {
+    x: 160, y: 400, w: 45, h: 45, vx: 0, vy: 0, 
+    jumpAnim: 0, dir: 1
+};
+
+function init() {
+    platforms = [];
+    platforms.push({ x: 0, y: 560, w: 360, h: 20 }); // Base
+    for(let i = 1; i < 7; i++) {
+        platforms.push(generatePlatform(i * 95));
+    }
+}
+
+function generatePlatform(y) {
+    return { x: Math.random() * 280, y: y, w: 75, h: 14 };
+}
+
+function startGame() {
+    document.getElementById('start-menu').style.display = 'none';
+    gameStarted = true;
+    init();
+    loop();
+}
+
+// Input Control
+const input = { left: false, right: false };
+const setupMove = (id, key) => {
+    const el = document.getElementById(id);
+    const start = (e) => { e.preventDefault(); input[key] = true; player.dir = key === 'left' ? -1 : 1; };
+    const end = () => input[key] = false;
+    el.addEventListener('mousedown', start); el.addEventListener('mouseup', end);
+    el.addEventListener('touchstart', start); el.addEventListener('touchend', end);
+};
+setupMove('left', 'left'); setupMove('right', 'right');
+
+window.onkeydown = e => { 
+    if(e.key.includes('Left')) {input.left = true; player.dir = -1;} 
+    if(e.key.includes('Right')) {input.right = true; player.dir = 1;} 
+};
+window.onkeyup = e => { input.left = false; input.right = false; };
+
+function update() {
+    if(gameOver || !gameStarted) return;
+
+    if(input.left) player.vx = -7; else if(input.right) player.vx = 7; else player.vx *= 0.82;
+    player.vy += 0.45; // Gravity
+    player.x += player.vx;
+    player.y += player.vy;
+
+    if (player.x > 360) player.x = -player.w;
+    if (player.x + player.w < 0) player.x = 360;
+
+    // Platform Jump
+    if (player.vy > 0) {
+        platforms.forEach(p => {
+            if (player.x + 35 > p.x && player.x + 10 < p.x + p.w &&
+                player.y + player.h > p.y && player.y + player.h < p.y + p.h + 12) {
+                player.vy = -13.5;
+                player.jumpAnim = 18;
+                playSound(450, 'sine', 900, 0.15); // Jump Sound
+                for(let i=0; i<4; i++) particles.push({x: player.x+20, y: player.y+40, vx: Math.random()*4-2, vy: Math.random()*2, l: 1});
+            }
+        });
+    }
+
+    // Scroll
+    if (player.y < 280) {
+        let diff = 280 - player.y;
+        player.y = 280;
+        score += 10;
+        document.getElementById('score').innerText = score;
+        platforms.forEach(p => {
+            p.y += diff;
+            if (p.y > 580) Object.assign(p, generatePlatform(0));
+        });
+    }
+
+    // Fall Down (Game Over)
+    if (player.y > 600) {
+        if(!gameOver) {
+            gameOver = true;
+            playSound(200, 'sawtooth', 50, 0.5, 0.15); // Fall Sound
+            if(score > highScore) localStorage.setItem('doodle_best', score);
+            document.getElementById('game-over-overlay').style.display = 'flex';
+            document.getElementById('final-score').innerText = "Score: " + score;
+        }
+    }
+
+    if(player.jumpAnim > 0) player.jumpAnim -= 1.5;
+    particles.forEach((p, i) => { p.x += p.vx; p.y += p.vy; p.l -= 0.05; if(p.l <= 0) particles.splice(i, 1); });
+}
+
+function draw() {
+    ctx.fillStyle = "#f4f1de"; ctx.fillRect(0, 0, 360, 580);
+    ctx.strokeStyle = "#e0dcc5"; ctx.lineWidth = 1;
+    for(let i=0; i<360; i+=30) { ctx.beginPath(); ctx.moveTo(i,0); ctx.lineTo(i,580); ctx.stroke(); }
+    for(let i=0; i<580; i+=30) { ctx.beginPath(); ctx.moveTo(0,i); ctx.lineTo(360,i); ctx.stroke(); }
+
+    particles.forEach(p => { ctx.fillStyle = `rgba(129, 178, 154, ${p.l})`; ctx.fillRect(p.x, p.y, 4, 4); });
+
+    ctx.fillStyle = "#81b29a";
+    platforms.forEach(p => {
+        ctx.beginPath(); ctx.roundRect(p.x, p.y, p.w, p.h, 8); ctx.fill();
+        ctx.fillStyle = "rgba(0,0,0,0.08)"; ctx.fillRect(p.x, p.y+p.h-5, p.w, 5); ctx.fillStyle = "#81b29a";
+    });
+
+    ctx.save();
+    let bounce = player.jumpAnim * 0.6;
+    ctx.translate(player.x + 22, player.y + 22);
+    ctx.scale(player.dir * (1 + bounce/50), 1 - bounce/50);
+    ctx.fillStyle = "#f2cc8f"; ctx.beginPath(); ctx.roundRect(-22, -22, 44, 44, 15); ctx.fill();
+    ctx.fillStyle = "#3d405b";
+    ctx.beginPath(); ctx.arc(10, -8, 3.5, 0, 7); ctx.fill();
+    ctx.beginPath(); ctx.arc(-5, -8, 3.5, 0, 7); ctx.fill();
+    ctx.fillStyle = "rgba(224, 122, 95, 0.4)";
+    ctx.beginPath(); ctx.arc(12, 2, 5, 0, 7); ctx.fill();
+    ctx.beginPath(); ctx.arc(-8, 2, 5, 0, 7); ctx.fill();
+    ctx.fillStyle = "#f2cc8f"; ctx.strokeStyle = "#e07a5f"; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.roundRect(8, 2, 18, 10, 5); ctx.fill(); ctx.stroke();
+    ctx.restore();
+}
+
+function loop() {
+    update();
+    draw();
+    if(!gameOver) requestAnimationFrame(loop);
+}
+
+// Show background initial draw
+draw();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Circle Dash</title>
+
+  <!-- Primary Meta Tags -->
+  <meta name="title" content="Circle Dash">
+  <meta name="description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta name="theme-color" content="#00e5ff">
+  
+  <!-- Canonical Url -->
+  <link rel="canonical" href="https://mnzonex.github.io/games/game4/circle-dash-game.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mnzonex.github.io/games/game4/circle-dash-game.html">
+  <meta property="og:title" content="Circle Dash">
+  <meta property="og:description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta property="og:image" content="https://mnzonex.github.io/assets/images/branding/mnzonex-512x512.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://mnzonex.github.io/games/game4/circle-dash-game.html">
+  <meta property="twitter:title" content="Circle Dash">
+  <meta property="twitter:description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta property="twitter:image" content="https://mnzonex.github.io/assets/images/branding/mnzonex-512x512.png">
+
+  <!-- Favicon & App Icons -->
+  <link rel="icon" type="image/x-icon" href="../../assets/images/branding/mnzonex-favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/images/branding/mnzonex-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/branding/mnzonex-favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../assets/images/branding/mnzonex-apple-icon.png">
+  <link rel="manifest" href="../../assets/images/branding/mnzonex.webmanifest">
+
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --neon-blue: #00fbff; --neon-pink: #ff0055; --bg: #020205; }
+        body { 
+            margin: 0; background: var(--bg); color: white; 
+            font-family: 'Orbitron', sans-serif;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            height: 100vh; overflow: hidden; touch-action: none;
+        }
+        #game-container { 
+            position: relative; width: 360px; height: 500px; 
+            border: 3px solid #1a1a2e; background: #000;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.5); border-radius: 20px;
+        }
+        canvas { display: block; border-radius: 20px; }
+        .overlay { 
+            position: absolute; inset: 0; background: rgba(0,0,0,0.9); 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 100;
+        }
+        .btn { 
+            background: linear-gradient(45deg, var(--neon-blue), #0077ff); 
+            border: none; padding: 18px 45px; font-family: 'Orbitron', sans-serif; 
+            cursor: pointer; color: #000; font-weight: 800; border-radius: 10px; 
+            font-size: 16px; box-shadow: 0 0 20px var(--neon-blue);
+        }
+        .hud { 
+            position: absolute; top: 20px; width: 100%; display: flex; 
+            justify-content: space-around; font-size: 12px; color: var(--neon-blue); pointer-events: none;
+        }
+        .hidden { display: none !important; }
+        
+        .copyright {
+  font-family: Arial, sans-serif; /* ඔයාගේ font එක */
+  font-size: 12px;
+  color: #666;
+  text-align: center;
+}
+
+    </style>
+</head>
+<body>
+
+    <div id="game-container">
+        <div class="hud">
+            <span>PINS: <span id="pCount">0</span></span>
+            <span>BEST: <span id="hScore">0</span></span>
+        </div>
+        
+        <div id="start-screen" class="overlay">
+            <h1 style="color: var(--neon-blue); letter-spacing: 5px; margin-bottom: 30px;">CIRCLE DASH</h1>
+            <button class="btn" id="startBtn">INITIALIZE</button>
+        </div>
+
+        <div id="death-screen" class="overlay hidden">
+            <h1 style="color: var(--neon-pink);">CRASHED</h1>
+            <button class="btn" style="background: var(--neon-pink); box-shadow: 0 0 20px var(--neon-pink);" id="retryBtn">REBOOT</button>
+        </div>
+
+        <canvas id="gameCanvas"></canvas>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Advanced Sound Engine
+        const sfx = {
+            ctx: null,
+            init() { if(!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)(); },
+            play(f, t, d, v) {
+                if(!this.ctx) return;
+                let o = this.ctx.createOscillator(), g = this.ctx.createGain();
+                o.type = t; o.frequency.setValueAtTime(f, this.ctx.currentTime);
+                g.gain.setValueAtTime(v, this.ctx.currentTime);
+                g.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + d);
+                o.connect(g); g.connect(this.ctx.destination);
+                o.start(); o.stop(this.ctx.currentTime + d);
+            }
+        };
+
+        const game = {
+            active: false,
+            rotation: 0,
+            speed: 0.035,
+            pins: [],
+            flyingY: null,
+            toShoot: 10,
+            high: localStorage.getItem('dashHi') || 0,
+
+            start() {
+                sfx.init();
+                sfx.play(600, 'sine', 0.1, 0.1);
+                canvas.width = 360; canvas.height = 500;
+                this.cx = 180; this.cy = 180; // රවුමේ මැද
+                this.pins = [];
+                this.flyingY = null;
+                this.toShoot = 10;
+                this.rotation = 0;
+                this.speed = 0.035;
+                this.active = true;
+
+                document.getElementById('start-screen').classList.add('hidden');
+                document.getElementById('death-screen').classList.add('hidden');
+                document.getElementById('hScore').innerText = this.high;
+                document.getElementById('pCount').innerText = this.toShoot;
+                this.loop();
+            },
+
+            shoot() {
+                if (!this.active || this.flyingY !== null) return;
+                sfx.play(800, 'square', 0.05, 0.05);
+                this.flyingY = 440; // විදින පින් එකේ පල්ලෙහාම ස්ථානය
+            },
+
+            update() {
+                if (!this.active) return;
+                this.rotation += this.speed;
+
+                if (this.flyingY !== null) {
+                    this.flyingY -= 25; // පින් එක උඩට යන වේගය
+
+                    // 90° දෝෂය සම්පූර්ණයෙන්ම ඉවත් කරන ප්‍රධාන කොටස:
+                    if (this.flyingY <= this.cy + 55) {
+                        // පින් එක යට සිට සිරස්ව යන නිසා එහි වර්තමාන කෝණය හරියටම 90° (Math.PI / 2) වේ.
+                        // රවුමට ඇලවෙන විට එහි සාපේක්ෂ කෝණය = (වැදුණු කෝණය - රවුමේ වත්මන් කැරකීම)
+                        const hitAngle = (Math.PI * 2) - this.rotation;
+
+                        // පින් එකක් තව එකක වැදෙනවාද බැලීම
+                        for (let p of this.pins) {
+                            let diff = Math.abs(hitAngle - p) % (Math.PI * 2);
+                            if (diff > Math.PI) diff = Math.PI * 2 - diff;
+                            if (diff < 0.22) return this.over();
+                        }
+
+                        this.pins.push(hitAngle);
+                        this.toShoot--;
+                        this.flyingY = null;
+                        document.getElementById('pCount').innerText = this.toShoot;
+                        sfx.play(1200, 'sine', 0.05, 0.05);
+
+                        if (this.toShoot <= 0) {
+                            this.speed = (Math.abs(this.speed) + 0.008) * (Math.random() > 0.5 ? 1 : -1);
+                            this.toShoot = 8 + Math.floor(this.pins.length/2);
+                        }
+                    }
+                }
+            },
+
+            draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // රවුම සහ එයට ඇලවුණු පින්ස්
+                ctx.save();
+                ctx.translate(this.cx, this.cy);
+                ctx.rotate(this.rotation);
+                
+                // මධ්‍ය කෝර් එක (Neon Hub)
+                ctx.beginPath();
+                ctx.arc(0, 0, 50, 0, Math.PI * 2);
+                ctx.strokeStyle = '#00fbff';
+                ctx.lineWidth = 4;
+                ctx.shadowBlur = 15;
+                ctx.shadowColor = '#00fbff';
+                ctx.stroke();
+
+                // රවුමේ වැදී ඇති පින්ස්
+                this.pins.forEach(angle => {
+                    ctx.save();
+                    ctx.rotate(angle);
+                    ctx.fillStyle = '#00fbff';
+                    ctx.fillRect(-2, 50, 4, 100);
+                    ctx.beginPath(); ctx.arc(0, 150, 7, 0, Math.PI * 2); ctx.fill();
+                    ctx.restore();
+                });
+                ctx.restore();
+
+                // Launcher (පින් එක විදින තැන - 90° සිරස් රේඛාවේම ඇත)
+                ctx.shadowBlur = 0;
+                if (this.flyingY === null) {
+                    ctx.fillStyle = '#ff0055';
+                    ctx.fillRect(this.cx - 2, 420, 4, 40);
+                    ctx.beginPath(); ctx.arc(this.cx, 460, 10, 0, Math.PI * 2); ctx.fill();
+                } else {
+                    // උඩට යන පින් එක
+                    ctx.fillStyle = '#ffffff';
+                    ctx.fillRect(this.cx - 2, this.flyingY - 40, 4, 40);
+                    ctx.beginPath(); ctx.arc(this.cx, this.flyingY, 8, 0, Math.PI * 2); ctx.fill();
+                }
+            },
+
+            loop() {
+                if (!this.active) return;
+                this.update(); this.draw();
+                requestAnimationFrame(() => this.loop());
+            },
+
+            over() {
+                this.active = false;
+                sfx.play(100, 'sawtooth', 0.3, 0.2);
+                if(this.pins.length > this.high) {
+                    this.high = this.pins.length;
+                    localStorage.setItem('dashHi', this.high);
+                }
+                document.getElementById('death-screen').classList.remove('hidden');
+            }
+        };
+
+        // Event Listeners
+        document.getElementById('startBtn').addEventListener('click', () => game.start());
+        document.getElementById('retryBtn').addEventListener('click', () => game.start());
+        window.addEventListener('mousedown', () => { if(game.active) game.shoot(); });
+        window.addEventListener('touchstart', (e) => { 
+            if(game.active) { e.preventDefault(); game.shoot(); } 
+        }, {passive: false});
+    </script>
+    
+    <footer>
+  <p class="copyright">&copy; 2026 MN ZONEX. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

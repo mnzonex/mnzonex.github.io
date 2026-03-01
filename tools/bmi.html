@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Calculator | MN ZONEX 2.0</title>
+
+  <!-- Primary Meta Tags -->
+  <meta name="title" content="BMI Calculator | MN ZONEX 2.0">
+  <meta name="description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta name="theme-color" content="#00e5ff">
+  
+  <!-- Canonical Url -->
+  <link rel="canonical" href="https://mnzonex.github.io/tools/bmi.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mnzonex.github.io/tools/bmi.html">
+  <meta property="og:title" content="BMI Calculator | MN ZONEX 2.0">
+  <meta property="og:description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta property="og:image" content="https://mnzonex.github.io/assets/images/branding/mnzonex-512x512.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://mnzonex.github.io/tools/bmi.html">
+  <meta property="twitter:title" content="BMI Calculator | MN ZONEX 2.0">
+  <meta property="twitter:description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta property="twitter:image" content="https://mnzonex.github.io/assets/images/branding/mnzonex-512x512.png">
+
+  <!-- Favicon & App Icons -->
+  <link rel="icon" type="image/x-icon" href="../assets/images/branding/mnzonex-favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/branding/mnzonex-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/branding/mnzonex-favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/branding/mnzonex-apple-icon.png">
+  <link rel="manifest" href="../assets/images/branding/mnzonex.webmanifest">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/base.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+    <style>
+        body {
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            justify-content: center;
+            background: radial-gradient(circle at center, #111 0%, #000 100%);
+        }
+
+        .tool-container {
+            max-width: 450px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: #fff;
+            font-family: inherit;
+        }
+
+        .bmi-result {
+            font-size: 48px;
+            font-weight: 900;
+            color: var(--primary);
+            margin: 25px 0;
+            text-shadow: 0 0 20px var(--primary-glow);
+        }
+
+        .category {
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="tool-container">
+        <h1><i class="fa-solid fa-weight-scale"></i> BMI Calc</h1>
+        <div class="input-group">
+            <label>Weight (kg)</label>
+            <input type="number" id="weight" placeholder="e.g. 70">
+        </div>
+        <div class="input-group">
+            <label>Height (cm)</label>
+            <input type="number" id="height" placeholder="e.g. 175">
+        </div>
+        <button class="btn" style="width:100%" onclick="calcBMI()">Calculate BMI</button>
+        <div class="bmi-result" id="bmiResult">0.0</div>
+        <div class="category" id="bmiCategory">Enter values</div>
+    </div>
+    <script>
+        function calcBMI() {
+            const w = parseFloat(document.getElementById('weight').value);
+            const h = parseFloat(document.getElementById('height').value) / 100;
+            if (w && h) {
+                const bmi = (w / (h * h)).toFixed(1);
+                document.getElementById('bmiResult').innerText = bmi;
+                let cat = "";
+                if (bmi < 18.5) cat = "Underweight";
+                else if (bmi < 25) cat = "Normal";
+                else if (bmi < 30) cat = "Overweight";
+                else cat = "Obese";
+                document.getElementById('bmiCategory').innerText = cat;
+            }
+        }
+    </script>
+</body>
+
+</html>

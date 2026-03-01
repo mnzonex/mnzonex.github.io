@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Filters | MN ZONEX 2.0</title>
+
+  <!-- Primary Meta Tags -->
+  <meta name="title" content="Image Filters | MN ZONEX 2.0">
+  <meta name="description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta name="theme-color" content="#00e5ff">
+  
+  <!-- Canonical Url -->
+  <link rel="canonical" href="https://mnzonex.github.io/tools/filters.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mnzonex.github.io/tools/filters.html">
+  <meta property="og:title" content="Image Filters | MN ZONEX 2.0">
+  <meta property="og:description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta property="og:image" content="https://mnzonex.github.io/assets/images/branding/mnzonex-512x512.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://mnzonex.github.io/tools/filters.html">
+  <meta property="twitter:title" content="Image Filters | MN ZONEX 2.0">
+  <meta property="twitter:description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta property="twitter:image" content="https://mnzonex.github.io/assets/images/branding/mnzonex-512x512.png">
+
+  <!-- Favicon & App Icons -->
+  <link rel="icon" type="image/x-icon" href="../assets/images/branding/mnzonex-favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/branding/mnzonex-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/branding/mnzonex-favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/branding/mnzonex-apple-icon.png">
+  <link rel="manifest" href="../assets/images/branding/mnzonex.webmanifest">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/base.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+    <style>
+        body {
+            padding: 40px 20px;
+            background: #000;
+            color: #fff;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .tool-container {
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .img-container {
+            width: 100%;
+            max-height: 400px;
+            overflow: hidden;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            background: #111;
+        }
+
+        img {
+            width: 100%;
+            transition: 0.3s;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .control-group {
+            text-align: left;
+        }
+
+        label {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        input[type="range"] {
+            width: 100%;
+            accent-color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="tool-container">
+        <h1><i class="fa-solid fa-wand-magic"></i> Image Filter</h1>
+        <div class="img-container">
+            <img id="previewImg" src="../assets/images/games/game6.jpg" alt="Preview Image">
+        </div>
+        <div class="controls">
+            <div class="control-group"><label>Grayscale</label><input type="range" id="gray" min="0" max="100" value="0"
+                    oninput="update()"></div>
+            <div class="control-group"><label>Blur (px)</label><input type="range" id="blur" min="0" max="20" value="0"
+                    oninput="update()"></div>
+            <div class="control-group"><label>Brightness</label><input type="range" id="bright" min="0" max="200"
+                    value="100" oninput="update()"></div>
+            <div class="control-group"><label>Contrast</label><input type="range" id="cont" min="0" max="200"
+                    value="100" oninput="update()"></div>
+        </div>
+        <div style="margin-top:20px; background:#111; padding:15px; border-radius:10px; font-family:monospace"
+            id="code">
+            filter: grayscale(0%) blur(0px) brightness(100%) contrast(100%);
+        </div>
+    </div>
+    <script>
+        function update() {
+            const g = document.getElementById('gray').value;
+            const b = document.getElementById('blur').value;
+            const br = document.getElementById('bright').value;
+            const c = document.getElementById('cont').value;
+            const img = document.getElementById('previewImg');
+
+            const filter = `grayscale(${g}%) blur(${b}px) brightness(${br}%) contrast(${c}%)`;
+            img.style.filter = filter;
+            document.getElementById('code').innerText = `filter: ${filter};`;
+        }
+    </script>
+</body>
+
+</html>

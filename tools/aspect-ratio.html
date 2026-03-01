@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aspect Ratio Calc | MN ZONEX 2.0</title>
+
+  <!-- Primary Meta Tags -->
+  <meta name="title" content="Aspect Ratio Calc | MN ZONEX 2.0">
+  <meta name="description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta name="theme-color" content="#00e5ff">
+  
+  <!-- Canonical Url -->
+  <link rel="canonical" href="https://mnzonex.github.io/tools/aspect-ratio.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mnzonex.github.io/tools/aspect-ratio.html">
+  <meta property="og:title" content="Aspect Ratio Calc | MN ZONEX 2.0">
+  <meta property="og:description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta property="og:image" content="https://mnzonex.github.io/assets/images/branding/mnzonex-512x512.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://mnzonex.github.io/tools/aspect-ratio.html">
+  <meta property="twitter:title" content="Aspect Ratio Calc | MN ZONEX 2.0">
+  <meta property="twitter:description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta property="twitter:image" content="https://mnzonex.github.io/assets/images/branding/mnzonex-512x512.png">
+
+  <!-- Favicon & App Icons -->
+  <link rel="icon" type="image/x-icon" href="../assets/images/branding/mnzonex-favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/branding/mnzonex-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/branding/mnzonex-favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/branding/mnzonex-apple-icon.png">
+  <link rel="manifest" href="../assets/images/branding/mnzonex.webmanifest">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/base.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+    <style>
+        body {
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            justify-content: center;
+            background: radial-gradient(circle at center, #111 0%, #000 100%);
+        }
+
+        .tool-container {
+            max-width: 500px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .input-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        input {
+            flex: 1;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: #fff;
+            text-align: center;
+        }
+
+        .label {
+            color: var(--text-muted);
+            font-size: 14px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="tool-container">
+        <h1><i class="fa-solid fa-expand"></i> Aspect Ratio</h1>
+        <div style="margin-bottom:30px">
+            <label class="label">Original Dimension</label>
+            <div class="input-row">
+                <input type="number" id="w1" value="1920" oninput="calc()">
+                <span style="color:var(--primary)">×</span>
+                <input type="number" id="h1" value="1080" oninput="calc()">
+            </div>
+        </div>
+        <div>
+            <label class="label">New Dimension (Scale)</label>
+            <div class="input-row">
+                <input type="number" id="w2" value="1280" oninput="scaleHeight()">
+                <span style="color:var(--primary)">×</span>
+                <input type="number" id="h2" oninput="scaleWidth()">
+            </div>
+        </div>
+    </div>
+    <script>
+        function calc() { scaleHeight(); }
+        function scaleHeight() {
+            const w1 = document.getElementById('w1').value;
+            const h1 = document.getElementById('h1').value;
+            const w2 = document.getElementById('w2').value;
+            if (w1 && h1 && w2) {
+                document.getElementById('h2').value = Math.round((h1 / w1) * w2);
+            }
+        }
+        function scaleWidth() {
+            const w1 = document.getElementById('w1').value;
+            const h1 = document.getElementById('h1').value;
+            const h2 = document.getElementById('h2').value;
+            if (w1 && h1 && h2) {
+                document.getElementById('w2').value = Math.round((w1 / h1) * h2);
+            }
+        }
+        window.onload = scaleHeight;
+    </script>
+</body>
+
+</html>

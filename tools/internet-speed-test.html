@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Internet Speed Test | MN ZONEX 2.0</title>
+
+  <!-- Primary Meta Tags -->
+  <meta name="title" content="Internet Speed Test | MN ZONEX 2.0">
+  <meta name="description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta name="theme-color" content="#00e5ff">
+  
+  <!-- Canonical Url -->
+  <link rel="canonical" href="https://mnzonex.github.io/tools/internet-speed-test.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mnzonex.github.io/tools/internet-speed-test.html">
+  <meta property="og:title" content="Internet Speed Test | MN ZONEX 2.0">
+  <meta property="og:description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta property="og:image" content="https://mnzonex.github.io/assets/images/branding/mnzonex-512x512.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://mnzonex.github.io/tools/internet-speed-test.html">
+  <meta property="twitter:title" content="Internet Speed Test | MN ZONEX 2.0">
+  <meta property="twitter:description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta property="twitter:image" content="https://mnzonex.github.io/assets/images/branding/mnzonex-512x512.png">
+
+  <!-- Favicon & App Icons -->
+  <link rel="icon" type="image/x-icon" href="../assets/images/branding/mnzonex-favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/branding/mnzonex-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/branding/mnzonex-favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/branding/mnzonex-apple-icon.png">
+  <link rel="manifest" href="../assets/images/branding/mnzonex.webmanifest">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <style>
+    body {
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      justify-content: center;
+      background: radial-gradient(circle at center, #111 0%, #000 100%);
+    }
+
+    .tool-container {
+      max-width: 500px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 50px;
+      border-radius: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
+      text-align: center;
+    }
+
+    .gauge {
+      width: 250px;
+      height: 250px;
+      border: 15px solid rgba(255, 255, 255, 0.05);
+      border-radius: 50%;
+      margin: 0 auto 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      border-top-color: var(--primary);
+    }
+
+    .speed-val {
+      font-size: 60px;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1;
+    }
+
+    .unit {
+      font-size: 18px;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    .btn-test {
+      width: 100%;
+      padding: 18px;
+      background: var(--primary);
+      color: #000;
+      border: none;
+      border-radius: 15px;
+      font-weight: 800;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn-test:disabled {
+      background: #333;
+      color: #666;
+      cursor: not-allowed;
+    }
+
+    @keyframes rotate {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .anim-spin {
+      animation: rotate 1s linear infinite;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="tool-container">
+    <h1><i class="fa-solid fa-gauge-high"></i> Speed Test</h1>
+    <p style="color:var(--text-muted); margin-bottom:30px">Simulated Speed Analysis</p>
+    <div class="gauge" id="gauge">
+      <div class="speed-val" id="speed">0.0</div>
+      <div class="unit">Mbps</div>
+    </div>
+    <button class="btn-test" id="testBtn" onclick="runTest()">Start Speed Test</button>
+    <p style="margin-top:20px; color:var(--text-muted); font-size:12px">* Real speed tests require large servers. This
+      is a simulation.</p>
+  </div>
+  <script>
+    function runTest() {
+      const btn = document.getElementById('testBtn');
+      const gauge = document.getElementById('gauge');
+      const speed = document.getElementById('speed');
+
+      btn.disabled = true;
+      btn.innerText = "Testing...";
+      gauge.classList.add('anim-spin');
+
+      let count = 0;
+      const interval = setInterval(() => {
+        speed.innerText = (Math.random() * 100).toFixed(1);
+        count++;
+        if (count > 30) {
+          clearInterval(interval);
+          gauge.classList.remove('anim-spin');
+          speed.innerText = (Math.random() * 50 + 20).toFixed(1);
+          btn.disabled = false;
+          btn.innerText = "Restart Test";
+        }
+      }, 100);
+    }
+  </script>
+</body>
+
+</html>

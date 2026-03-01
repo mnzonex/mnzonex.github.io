@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Advanced Color Picker | MN ZONEX 2.0</title>
+
+  <!-- Primary Meta Tags -->
+  <meta name="title" content="Advanced Color Picker | MN ZONEX 2.0">
+  <meta name="description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta name="theme-color" content="#00e5ff">
+  
+  <!-- Canonical Url -->
+  <link rel="canonical" href="https://mnzonex.github.io/tools/color-picker.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mnzonex.github.io/tools/color-picker.html">
+  <meta property="og:title" content="Advanced Color Picker | MN ZONEX 2.0">
+  <meta property="og:description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta property="og:image" content="https://mnzonex.github.io/assets/images/branding/mnzonex-512x512.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://mnzonex.github.io/tools/color-picker.html">
+  <meta property="twitter:title" content="Advanced Color Picker | MN ZONEX 2.0">
+  <meta property="twitter:description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta property="twitter:image" content="https://mnzonex.github.io/assets/images/branding/mnzonex-512x512.png">
+
+  <!-- Favicon & App Icons -->
+  <link rel="icon" type="image/x-icon" href="../assets/images/branding/mnzonex-favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/branding/mnzonex-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/branding/mnzonex-favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/branding/mnzonex-apple-icon.png">
+  <link rel="manifest" href="../assets/images/branding/mnzonex.webmanifest">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{
+  font-family: "Segoe UI", Arial, sans-serif;
+  background:#0b0b0b;
+  color:#fff;
+  text-align:center;
+  margin:0;
+  padding:20px;
+}
+
+h1{
+  color:#00e5ff;
+  font-size:2.5em;
+  margin-bottom:20px;
+}
+
+#picker-container{
+  position:relative;
+  width:90%;
+  max-width:500px;
+  aspect-ratio: 5/3;
+  margin:20px auto;
+  background:linear-gradient(to right, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00);
+  border-radius:15px;
+  overflow:hidden;
+  cursor:crosshair;
+}
+
+#picker-container::after{
+  content:"";
+  position:absolute;
+  top:0; left:0; right:0; bottom:0;
+  background:linear-gradient(to top, #000, rgba(0,0,0,0));
+}
+
+#pointer{
+  position:absolute;
+  width:24px;
+  height:24px;
+  border:3px solid #fff;
+  border-radius:50%;
+  transform:translate(-50%, -50%);
+  pointer-events:none;
+  box-shadow:0 0 8px #00e5ff;
+}
+
+#selected-color{
+  margin-top:20px;
+  font-size:1.2em;
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  flex-wrap:wrap;
+}
+
+.color-box{
+  width:40px;
+  height:40px;
+  border-radius:8px;
+  border:2px solid #fff;
+}
+
+button{
+  margin-top:15px;
+  padding:10px 28px;
+  background:#00e5ff;
+  color:#000;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:bold;
+  transition:0.3s;
+}
+button:hover{
+  box-shadow:0 0 15px #00e5ff;
+}
+
+/* Responsive text sizes */
+@media(max-width:600px){
+  h1{ font-size:2em; }
+  #selected-color{ font-size:1em; }
+  .color-box{ width:30px; height:30px; }
+}
+</style>
+</head>
+<body>
+
+<h1><h2>&#127912; Color Picker</h1>
+
+<div id="picker-container">
+  <div id="pointer"></div>
+</div>
+
+<div id="selected-color">
+  <div class="color-box" id="color-preview"></div>
+  <span id="color-code">#FFFFFF</span>
+  <span id="color-name">White</span>
+</div>
+
+<button id="copy-btn">Copy Color</button>
+
+<script>
+const picker = document.getElementById("picker-container");
+const pointer = document.getElementById("pointer");
+const colorPreview = document.getElementById("color-preview");
+const colorCode = document.getElementById("color-code");
+const colorName = document.getElementById("color-name");
+const copyBtn = document.getElementById("copy-btn");
+
+let isDragging = false;
+
+picker.addEventListener("mousedown", (e)=>{
+  isDragging = true;
+  updateColor(e);
+});
+window.addEventListener("mouseup", ()=> isDragging=false);
+window.addEventListener("mousemove", (e)=>{
+  if(isDragging) updateColor(e);
+});
+
+// Touch support
+picker.addEventListener("touchstart",(e)=>{
+  isDragging = true;
+  updateColor(e.touches[0]);
+});
+window.addEventListener("touchend", ()=> isDragging=false);
+window.addEventListener("touchmove",(e)=>{
+  if(isDragging) updateColor(e.touches[0]);
+});
+
+function updateColor(e){
+  const rect = picker.getBoundingClientRect();
+  let x = e.clientX - rect.left;
+  let y = e.clientY - rect.top;
+
+  x = Math.max(0, Math.min(x, rect.width));
+  y = Math.max(0, Math.min(y, rect.height));
+
+  pointer.style.left = x + "px";
+  pointer.style.top = y + "px";
+
+  // Temporary canvas to sample color
+  const canvas = document.createElement("canvas");
+  canvas.width = rect.width;
+  canvas.height = rect.height;
+  const ctx = canvas.getContext("2d");
+
+  // Horizontal rainbow
+  const gradient = ctx.createLinearGradient(0,0,rect.width,0);
+  gradient.addColorStop(0,"#ff0000");
+  gradient.addColorStop(0.17,"#ffff00");
+  gradient.addColorStop(0.34,"#00ff00");
+  gradient.addColorStop(0.51,"#00ffff");
+  gradient.addColorStop(0.68,"#0000ff");
+  gradient.addColorStop(0.85,"#ff00ff");
+  gradient.addColorStop(1,"#ff0000");
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0,0,rect.width,rect.height);
+
+  // Vertical black overlay for brightness
+  const overlay = ctx.createLinearGradient(0,0,0,rect.height);
+  overlay.addColorStop(0,"rgba(255,255,255,0)");
+  overlay.addColorStop(1,"rgba(0,0,0,1)");
+  ctx.fillStyle = overlay;
+  ctx.fillRect(0,0,rect.width,rect.height);
+
+  const pixel = ctx.getImageData(x,y,1,1).data;
+  const r = pixel[0], g = pixel[1], b = pixel[2];
+  const hex = rgbToHex(r,g,b);
+
+  colorPreview.style.background = hex;
+  colorCode.textContent = hex;
+  colorName.textContent = getColorName(r,g,b);
+}
+
+// Convert RGB to HEX
+function rgbToHex(r,g,b){
+  return "#" + [r,g,b].map(x=>x.toString(16).padStart(2,"0")).join("").toUpperCase();
+}
+
+// Approximate color names
+function getColorName(r,g,b){
+  const names = {
+    "255,0,0":"Red","0,255,0":"Lime","0,0,255":"Blue",
+    "255,255,0":"Yellow","255,0,255":"Magenta","0,255,255":"Cyan",
+    "255,255,255":"White","0,0,0":"Black","128,128,128":"Gray"
+  };
+  const key = `${r},${g},${b}`;
+  return names[key] || "Custom";
+}
+
+// Copy to clipboard
+copyBtn.addEventListener("click", ()=>{
+  navigator.clipboard.writeText(colorCode.textContent).then(()=>{
+    alert(`Color ${colorCode.textContent} copied to clipboard!`);
+  });
+});
+</script>
+
+</body>
+</html>

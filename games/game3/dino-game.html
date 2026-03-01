@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Dino Runner Pro</title>
+
+  <!-- Primary Meta Tags -->
+  <meta name="title" content="Dino Runner Pro">
+  <meta name="description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta name="theme-color" content="#00e5ff">
+  
+  <!-- Canonical Url -->
+  <link rel="canonical" href="https://mnzonex.github.io/games/game3/dino-game.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mnzonex.github.io/games/game3/dino-game.html">
+  <meta property="og:title" content="Dino Runner Pro">
+  <meta property="og:description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta property="og:image" content="https://mnzonex.github.io/assets/images/branding/mnzonex-512x512.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://mnzonex.github.io/games/game3/dino-game.html">
+  <meta property="twitter:title" content="Dino Runner Pro">
+  <meta property="twitter:description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta property="twitter:image" content="https://mnzonex.github.io/assets/images/branding/mnzonex-512x512.png">
+
+  <!-- Favicon & App Icons -->
+  <link rel="icon" type="image/x-icon" href="../../assets/images/branding/mnzonex-favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/images/branding/mnzonex-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/branding/mnzonex-favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../assets/images/branding/mnzonex-apple-icon.png">
+  <link rel="manifest" href="../../assets/images/branding/mnzonex.webmanifest">
+
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-green: #39ff14;
+            --neon-pink: #ff007f;
+            --neon-blue: #00f3ff;
+            --dark-bg: #0a0a12;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #111;
+            font-family: 'Press Start 2P', cursive;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: white;
+            overflow: hidden;
+            touch-action: none;
+        }
+
+        .ad-banner {
+            width: 100%;
+            max-width: 728px;
+            height: 90px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px dashed #444;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: #666;
+            margin: 10px 0;
+        }
+
+        #game-container {
+            position: relative;
+            width: 95vw;
+            max-width: 800px;
+            height: 300px;
+            background: var(--dark-bg);
+            border: 4px solid #333;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(57, 255, 20, 0.2);
+            overflow: hidden;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+            image-rendering: pixelated;
+        }
+
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            text-align: center;
+        }
+
+        .score-hud {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 12px;
+            color: var(--neon-green);
+            text-shadow: 0 0 5px var(--neon-green);
+        }
+
+        .hidden { display: none !important; }
+
+        .btn-start {
+            background: var(--neon-green);
+            border: none;
+            padding: 15px 30px;
+            font-family: inherit;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 0 15px var(--neon-green);
+            color: #000;
+        }
+
+        .btn-start:active { transform: scale(0.95); }
+        
+        .copyright {
+            font-family: Arial, sans-serif; 
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ad-banner">GOOGLE AD SLOT (TOP)</div>
+
+    <div id="game-container">
+        <div class="score-hud">
+            HI <span id="hiScore">00000</span> | SC <span id="curScore">00000</span>
+        </div>
+
+        <div id="start-screen" class="overlay">
+            <h1 style="color: var(--neon-blue); margin-bottom: 20px;">DINO RUNNER</h1>
+            <button class="btn-start" onclick="startGame()">START GAME</button>
+            <p style="font-size: 8px; margin-top: 15px; color: #aaa;">TAP SCREEN TO JUMP</p>
+        </div>
+
+        <div id="death-screen" class="overlay hidden">
+            <h1 style="color: var(--neon-pink);">GAME OVER</h1>
+            <p id="final-score-text">SCORE: 0</p>
+            <button class="btn-start" style="background: var(--neon-pink); box-shadow: 0 0 15px var(--neon-pink);" onclick="startGame()">RETRY</button>
+        </div>
+
+        <canvas id="gameCanvas"></canvas>
+    </div>
+
+    <div class="ad-banner">GOOGLE AD SLOT (BOTTOM)</div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = 800;
+        canvas.height = 300;
+
+        // --- SOUND ENGINE (Web Audio API) ---
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        
+        function playSound(freq, type, duration, vol) {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            if(type === 'square') osc.frequency.exponentialRampToValueAtTime(freq/2, audioCtx.currentTime + duration);
+            
+            gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+            
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + duration);
+        }
+
+        const sfx = {
+            jump: () => playSound(150, 'square', 0.2, 0.1),
+            hit: () => playSound(60, 'sawtooth', 0.5, 0.2),
+            point: () => playSound(880, 'sine', 0.1, 0.1)
+        };
+
+        let score = 0;
+        let highScore = localStorage.getItem('neonDinoHi') || 0;
+        let isRunning = false;
+        let gameSpeed = 6;
+        let frame = 0;
+
+        class Dino {
+            constructor() {
+                this.width = 44;
+                this.height = 48;
+                this.x = 50;
+                this.y = 210;
+                this.vy = 0;
+                this.gravity = 0.8;
+                this.jumpPwr = -15;
+                this.grounded = false;
+            }
+            update() {
+                this.vy += this.gravity;
+                this.y += this.vy;
+                if (this.y > 210) {
+                    this.y = 210;
+                    this.vy = 0;
+                    this.grounded = true;
+                }
+            }
+            draw() {
+                ctx.fillStyle = varColor('--neon-green');
+                ctx.fillRect(this.x, this.y, this.width, this.height - 10);
+                ctx.fillRect(this.x + 20, this.y - 10, 24, 20);
+                ctx.fillStyle = '#000';
+                ctx.fillRect(this.x + 35, this.y - 5, 4, 4);
+                ctx.fillStyle = varColor('--neon-green');
+                let legY = this.y + this.height - 10;
+                if (this.grounded) {
+                    let anim = Math.floor(frame / 6) % 2;
+                    ctx.fillRect(this.x + (anim * 20), legY, 12, 10);
+                    ctx.fillRect(this.x + 25 - (anim * 20), legY, 12, 10);
+                } else {
+                    ctx.fillRect(this.x + 5, legY, 12, 10);
+                    ctx.fillRect(this.x + 25, legY, 12, 10);
+                }
+                ctx.shadowBlur = 15;
+                ctx.shadowColor = varColor('--neon-green');
+            }
+            jump() {
+                if (this.grounded) {
+                    this.vy = this.jumpPwr;
+                    this.grounded = false;
+                    sfx.jump(); // Jump SFX
+                }
+            }
+        }
+
+        class Obstacle {
+            constructor() {
+                this.type = Math.random() > 0.8 ? 'bird' : 'cactus';
+                this.x = 850;
+                this.width = this.type === 'bird' ? 40 : 25;
+                this.height = this.type === 'bird' ? 20 : 50;
+                this.y = this.type === 'bird' ? (Math.random() > 0.5 ? 120 : 180) : 210;
+                this.color = this.type === 'bird' ? varColor('--neon-pink') : varColor('--neon-blue');
+            }
+            update() { this.x -= gameSpeed; }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.shadowBlur = 15;
+                ctx.shadowColor = this.color;
+                if (this.type === 'bird') {
+                    let flap = Math.floor(frame / 8) % 2;
+                    ctx.fillRect(this.x, this.y, this.width, this.height);
+                    ctx.fillRect(this.x + 10, flap ? this.y - 15 : this.y + 15, 15, 15);
+                } else {
+                    ctx.fillRect(this.x, this.y, this.width, this.height);
+                    ctx.fillRect(this.x - 5, this.y + 10, 10, 10);
+                }
+            }
+        }
+
+        let player = new Dino();
+        let obstacles = [];
+        let stars = [];
+        for(let i=0; i<30; i++) stars.push({x: Math.random()*800, y: Math.random()*150, s: Math.random()*2});
+
+        function varColor(name) { return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+
+        function startGame() {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            score = 0;
+            gameSpeed = 7;
+            obstacles = [];
+            player = new Dino();
+            isRunning = true;
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('death-screen').classList.add('hidden');
+            loop();
+        }
+
+        function loop() {
+            if (!isRunning) return;
+            frame++;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            stars.forEach(s => {
+                s.x -= gameSpeed * 0.2;
+                if(s.x < 0) s.x = 800;
+                ctx.fillStyle = "#333";
+                ctx.fillRect(s.x, s.y, s.s, s.s);
+            });
+
+            ctx.strokeStyle = "#444";
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(0, 260);
+            ctx.lineTo(800, 260);
+            ctx.stroke();
+
+            player.update();
+            player.draw();
+
+            if (frame % Math.floor(1000 / gameSpeed) === 0) {
+                obstacles.push(new Obstacle());
+            }
+
+            obstacles.forEach((obs, index) => {
+                obs.update();
+                obs.draw();
+                if (player.x < obs.x + obs.width - 5 && 
+                    player.x + player.width - 5 > obs.x && 
+                    player.y < obs.y + obs.height && 
+                    player.y + player.height > obs.y) {
+                    gameOver();
+                }
+                if (obs.x < -100) obstacles.splice(index, 1);
+            });
+
+            if (frame % 5 === 0) {
+                score++;
+                if (score > 0 && score % 100 === 0) sfx.point(); // Point SFX every 100 SC
+            }
+            if (score % 100 === 0 && frame % 5 === 0) gameSpeed += 1;
+
+            document.getElementById('curScore').innerText = score.toString().padStart(5, '0');
+            document.getElementById('hiScore').innerText = highScore.toString().padStart(5, '0');
+
+            requestAnimationFrame(loop);
+        }
+
+        function gameOver() {
+            isRunning = false;
+            sfx.hit(); // Death SFX
+            if (score > highScore) {
+                highScore = score;
+                localStorage.setItem('neonDinoHi', highScore);
+            }
+            document.getElementById('final-score-text').innerText = "SCORE: " + score;
+            document.getElementById('death-screen').classList.remove('hidden');
+        }
+
+        const jumpAction = (e) => {
+            if (e.cancelable) e.preventDefault();
+            if (isRunning) player.jump();
+        };
+
+        window.addEventListener('keydown', (e) => { if (e.code === 'Space' || e.code === 'ArrowUp') jumpAction(e); });
+        canvas.addEventListener('touchstart', jumpAction);
+        canvas.addEventListener('mousedown', jumpAction);
+
+    </script>
+    
+    <footer>
+        <p class="copyright">&copy; 2026 MN ZONEX. All rights reserved.</p>
+    </footer>
+</body>
+</html>

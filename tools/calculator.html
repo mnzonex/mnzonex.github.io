@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scientific Calculator | MN ZONEX 2.0</title>
+
+  <!-- Primary Meta Tags -->
+  <meta name="title" content="Scientific Calculator | MN ZONEX 2.0">
+  <meta name="description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta name="theme-color" content="#00e5ff">
+  
+  <!-- Canonical Url -->
+  <link rel="canonical" href="https://mnzonex.github.io/tools/calculator.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mnzonex.github.io/tools/calculator.html">
+  <meta property="og:title" content="Scientific Calculator | MN ZONEX 2.0">
+  <meta property="og:description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta property="og:image" content="https://mnzonex.github.io/assets/images/branding/mnzonex-512x512.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://mnzonex.github.io/tools/calculator.html">
+  <meta property="twitter:title" content="Scientific Calculator | MN ZONEX 2.0">
+  <meta property="twitter:description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta property="twitter:image" content="https://mnzonex.github.io/assets/images/branding/mnzonex-512x512.png">
+
+  <!-- Favicon & App Icons -->
+  <link rel="icon" type="image/x-icon" href="../assets/images/branding/mnzonex-favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/branding/mnzonex-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/branding/mnzonex-favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/branding/mnzonex-apple-icon.png">
+  <link rel="manifest" href="../assets/images/branding/mnzonex.webmanifest">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/base.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+    <style>
+        body {
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            justify-content: center;
+            background: #000;
+        }
+
+        .calc-container {
+            max-width: 400px;
+            width: 100%;
+            background: #111;
+            padding: 25px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .display {
+            width: 100%;
+            height: 100px;
+            background: #000;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            text-align: right;
+            padding: 20px;
+            font-size: 32px;
+            color: var(--primary);
+            overflow: hidden;
+            font-weight: 700;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            word-break: break-all;
+        }
+
+        .history {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .btn-calc {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-calc:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .btn-op {
+            color: var(--primary);
+            background: rgba(var(--primary-rgb), 0.1);
+        }
+
+        .btn-sci {
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        .btn-eq {
+            background: var(--primary);
+            color: #000;
+            grid-column: span 2;
+        }
+
+        .btn-eq:hover {
+            background: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="calc-container">
+        <div class="display">
+            <div id="history" class="history"></div>
+            <div id="display">0</div>
+        </div>
+        <div class="grid">
+            <button class="btn-calc btn-sci" onclick="sci('sin')">sin</button>
+            <button class="btn-calc btn-sci" onclick="sci('cos')">cos</button>
+            <button class="btn-calc btn-sci" onclick="sci('tan')">tan</button>
+            <button class="btn-calc btn-op" onclick="clearDisplay()">C</button>
+
+            <button class="btn-calc btn-sci" onclick="sci('sqrt')">√</button>
+            <button class="btn-calc btn-sci" onclick="sci('log')">log</button>
+            <button class="btn-calc btn-sci" onclick="append('**')">^</button>
+            <button class="btn-calc btn-op" onclick="deleteLast()">⌫</button>
+
+            <button class="btn-calc" onclick="append('7')">7</button>
+            <button class="btn-calc" onclick="append('8')">8</button>
+            <button class="btn-calc" onclick="append('9')">9</button>
+            <button class="btn-calc btn-op" onclick="append('/')">÷</button>
+
+            <button class="btn-calc" onclick="append('4')">4</button>
+            <button class="btn-calc" onclick="append('5')">5</button>
+            <button class="btn-calc" onclick="append('6')">6</button>
+            <button class="btn-calc btn-op" onclick="append('*')">×</button>
+
+            <button class="btn-calc" onclick="append('1')">1</button>
+            <button class="btn-calc" onclick="append('2')">2</button>
+            <button class="btn-calc" onclick="append('3')">3</button>
+            <button class="btn-calc btn-op" onclick="append('-')">-</button>
+
+            <button class="btn-calc" onclick="append('.')">.</button>
+            <button class="btn-calc" onclick="append('0')">0</button>
+            <button class="btn-calc btn-op" onclick="append('+')">+</button>
+            <button class="btn-calc btn-sci" onclick="append('Math.PI')">π</button>
+
+            <button class="btn-calc" onclick="append('(')">(</button>
+            <button class="btn-calc" onclick="append(')')">)</button>
+            <button class="btn-calc btn-eq" onclick="calculate()">=</button>
+        </div>
+    </div>
+    <script>
+        const disp = document.getElementById('display');
+        const hist = document.getElementById('history');
+        let currentExpr = '0';
+
+        function append(v) {
+            if (disp.innerText === '0' && v !== '.') disp.innerText = '';
+            disp.innerText += v;
+        }
+
+        function clearDisplay() {
+            disp.innerText = '0';
+            hist.innerText = '';
+        }
+
+        function deleteLast() {
+            disp.innerText = disp.innerText.slice(0, -1) || '0';
+        }
+
+        function sci(fn) {
+            if (disp.innerText === '0') disp.innerText = '';
+            disp.innerText += `Math.${fn}(`;
+        }
+
+        function calculate() {
+            try {
+                const expr = disp.innerText.replace('÷', '/').replace('×', '*');
+                hist.innerText = expr;
+                const result = eval(expr);
+                disp.innerText = Number.isInteger(result) ? result : result.toFixed(8).replace(/\.?0+$/, "");
+            } catch (e) {
+                disp.innerText = 'Error';
+            }
+        }
+    </script>
+</body>
+
+</html>
+
+</html>

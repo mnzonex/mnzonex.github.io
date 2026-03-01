@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QR Code Generator | MN ZONEX 2.0</title>
+
+  <!-- Primary Meta Tags -->
+  <meta name="title" content="QR Code Generator | MN ZONEX 2.0">
+  <meta name="description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta name="theme-color" content="#00e5ff">
+  
+  <!-- Canonical Url -->
+  <link rel="canonical" href="https://mnzonex.github.io/tools/qr-generator.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mnzonex.github.io/tools/qr-generator.html">
+  <meta property="og:title" content="QR Code Generator | MN ZONEX 2.0">
+  <meta property="og:description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta property="og:image" content="https://mnzonex.github.io/assets/images/branding/mnzonex-512x512.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://mnzonex.github.io/tools/qr-generator.html">
+  <meta property="twitter:title" content="QR Code Generator | MN ZONEX 2.0">
+  <meta property="twitter:description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta property="twitter:image" content="https://mnzonex.github.io/assets/images/branding/mnzonex-512x512.png">
+
+  <!-- Favicon & App Icons -->
+  <link rel="icon" type="image/x-icon" href="../assets/images/branding/mnzonex-favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/branding/mnzonex-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/branding/mnzonex-favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/branding/mnzonex-apple-icon.png">
+  <link rel="manifest" href="../assets/images/branding/mnzonex.webmanifest">
+
+
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #0b0b0b;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+/* Hero */
+.hero {
+  text-align: center;
+  padding: 60px 20px;
+}
+.hero h2 {
+  color: #00e5ff;
+  font-size: 42px;
+  margin-bottom: 10px;
+}
+.hero p {
+  color: #ccc;
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+/* QR Generator Card */
+.qr-card{
+  background:#141414;
+  border-radius:16px;
+  padding:40px 25px;
+  box-shadow:0 0 25px #00e5ff33;
+  text-align:center;
+  width:350px;
+  transition:0.3s;
+}
+.qr-card input{
+  width: 100%;
+  padding: 12px 10px;
+  border-radius:8px;
+  border:none;
+  margin-bottom:15px;
+  font-size:16px;
+}
+.qr-card button{
+  padding:12px 28px;
+  background:#00e5ff;
+  color:#000;
+  font-weight:bold;
+  border-radius:30px;
+  border:none;
+  cursor:pointer;
+  font-size:16px;
+  margin:5px;
+  transition: all 0.3s ease;
+}
+.qr-card button:hover{
+  box-shadow:0 0 20px #00e5ff;
+  transform:scale(1.05);
+}
+
+/* Download animation */
+@keyframes downloadPulse {
+  0% { transform: scale(1); box-shadow: 0 0 10px #00e5ff33; }
+  50% { transform: scale(1.1); box-shadow: 0 0 25px #00e5ff88; }
+  100% { transform: scale(1); box-shadow: 0 0 10px #00e5ff33; }
+}
+.animate-download {
+  animation: downloadPulse 0.5s ease;
+}
+
+.qr-output{
+  margin-top:20px;
+}
+.qr-output img{
+  max-width:100%;
+  border-radius:12px;
+}
+
+/* Footer */
+footer{
+  text-align:center;
+  padding:20px;
+  color:#777;
+}
+
+/* Hide buttons initially */
+#downloadBtn{ display:none; }
+#copyBtn{ display:none; }
+
+/* Responsive */
+@media (max-width:480px){
+  .hero h2{ font-size:32px; }
+  .hero p{ font-size:16px; }
+  .qr-card{ width:90%; padding:25px; }
+  .qr-card input{ font-size:14px; padding:10px; }
+  .qr-card button{ font-size:14px; padding:10px 20px; }
+}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <h2>QR Code Generator</h2>
+  <p>Generate your QR code instantly</p>
+</section>
+
+<div class="qr-card">
+  <input type="text" id="qrText" placeholder="Enter text or URL">
+  <div>
+    <button onclick="generateQR()">Generate QR</button>
+    <button id="downloadBtn">Download</button>
+    <button id="copyBtn" onclick="copyQR()">Copy Text</button>
+  </div>
+  <div class="qr-output" id="qrOutput"></div>
+</div>
+
+<footer>© 2026 MN ZONEX. All rights reserved.</footer>
+
+<!-- QRious Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+    document.body.style.opacity = "1"; // fade-in page
+});
+
+let qr;
+const downloadBtn = document.getElementById("downloadBtn");
+const copyBtn = document.getElementById("copyBtn");
+
+function generateQR(){
+    const text = document.getElementById("qrText").value.trim();
+    if(!text){ alert("Please enter text or URL"); return; }
+
+    qr = new QRious({
+      element: document.createElement('canvas'),
+      value: text,
+      size: 250,
+      background: 'white',
+      foreground: '#000000',
+      level: 'H'
+    });
+
+    const qrOutput = document.getElementById("qrOutput");
+    qrOutput.innerHTML = "";
+    qrOutput.appendChild(qr.element);
+
+    // Show buttons
+    downloadBtn.style.display = "inline-block";
+    copyBtn.style.display = "inline-block";
+
+    // Set download functionality with animation
+    downloadBtn.onclick = function(){
+        // Add animation class
+        downloadBtn.classList.add('animate-download');
+        setTimeout(()=> downloadBtn.classList.remove('animate-download'), 500);
+
+        // Trigger download
+        const link = document.createElement('a');
+        link.href = qr.element.toDataURL("image/png");
+        link.download = "mnzonex_qrcode.png";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+}
+
+function copyQR(){
+    const text = document.getElementById("qrText").value.trim();
+    if(!text){ alert("Please enter text or URL"); return; }
+    navigator.clipboard.writeText(text).then(()=> alert("Text copied!"));
+}
+</script>
+
+</body>
+</html>

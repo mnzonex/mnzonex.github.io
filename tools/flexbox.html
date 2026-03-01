@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flexbox Playground | MN ZONEX 2.0</title>
+
+  <!-- Primary Meta Tags -->
+  <meta name="title" content="Flexbox Playground | MN ZONEX 2.0">
+  <meta name="description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta name="theme-color" content="#00e5ff">
+  
+  <!-- Canonical Url -->
+  <link rel="canonical" href="https://mnzonex.github.io/tools/flexbox.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mnzonex.github.io/tools/flexbox.html">
+  <meta property="og:title" content="Flexbox Playground | MN ZONEX 2.0">
+  <meta property="og:description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta property="og:image" content="https://mnzonex.github.io/assets/images/branding/mnzonex-512x512.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://mnzonex.github.io/tools/flexbox.html">
+  <meta property="twitter:title" content="Flexbox Playground | MN ZONEX 2.0">
+  <meta property="twitter:description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta property="twitter:image" content="https://mnzonex.github.io/assets/images/branding/mnzonex-512x512.png">
+
+  <!-- Favicon & App Icons -->
+  <link rel="icon" type="image/x-icon" href="../assets/images/branding/mnzonex-favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/branding/mnzonex-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/branding/mnzonex-favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/branding/mnzonex-apple-icon.png">
+  <link rel="manifest" href="../assets/images/branding/mnzonex.webmanifest">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/base.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+    <style>
+        body {
+            padding: 40px 20px;
+            background: #000;
+            color: #fff;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .tool-container {
+            max-width: 900px;
+            width: 100%;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .flex-preview {
+            display: flex;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px dashed var(--primary);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            min-height: 200px;
+        }
+
+        .flex-item {
+            background: #fff;
+            color: #000;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            border-radius: 8px;
+            border: 2px solid var(--primary);
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        select {
+            padding: 12px;
+            border-radius: 8px;
+            background: #111;
+            color: #fff;
+            border: 1px solid var(--glass-border);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="tool-container">
+        <h1><i class="fa-solid fa-object-group"></i> Flexbox Pro</h1>
+        <div class="flex-preview" id="preview">
+            <div class="flex-item">1</div>
+            <div class="flex-item">2</div>
+            <div class="flex-item">3</div>
+        </div>
+        <div class="controls">
+            <select id="dir" onchange="update()">
+                <option value="row">row</option>
+                <option value="column">column</option>
+            </select>
+            <select id="just" onchange="update()">
+                <option value="flex-start">flex-start</option>
+                <option value="center">center</option>
+                <option value="flex-end">flex-end</option>
+                <option value="space-between">space-between</option>
+            </select>
+            <select id="align" onchange="update()">
+                <option value="stretch">stretch</option>
+                <option value="center">center</option>
+                <option value="flex-start">flex-start</option>
+            </select>
+        </div>
+        <div style="background:#111; padding:15px; border-radius:10px; font-family:monospace; text-align:center"
+            id="code">
+            display: flex; flex-direction: row; justify-content: flex-start; align-items: stretch;
+        </div>
+    </div>
+    <script>
+        function update() {
+            const preview = document.getElementById('preview');
+            const d = document.getElementById('dir').value;
+            const j = document.getElementById('just').value;
+            const a = document.getElementById('align').value;
+
+            preview.style.flexDirection = d;
+            preview.style.justifyContent = j;
+            preview.style.alignItems = a;
+
+            document.getElementById('code').innerText = `display: flex; \nflex-direction: ${d}; \njustify-content: ${j}; \nalign-items: ${a};`;
+        }
+    </script>
+</body>
+
+</html>

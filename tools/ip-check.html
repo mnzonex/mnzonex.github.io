@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP Address Checker | MN ZONEX 2.0</title>
+
+  <!-- Primary Meta Tags -->
+  <meta name="title" content="IP Address Checker | MN ZONEX 2.0">
+  <meta name="description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta name="theme-color" content="#00e5ff">
+  
+  <!-- Canonical Url -->
+  <link rel="canonical" href="https://mnzonex.github.io/tools/ip-check.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mnzonex.github.io/tools/ip-check.html">
+  <meta property="og:title" content="IP Address Checker | MN ZONEX 2.0">
+  <meta property="og:description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta property="og:image" content="https://mnzonex.github.io/assets/images/branding/mnzonex-512x512.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://mnzonex.github.io/tools/ip-check.html">
+  <meta property="twitter:title" content="IP Address Checker | MN ZONEX 2.0">
+  <meta property="twitter:description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta property="twitter:image" content="https://mnzonex.github.io/assets/images/branding/mnzonex-512x512.png">
+
+  <!-- Favicon & App Icons -->
+  <link rel="icon" type="image/x-icon" href="../assets/images/branding/mnzonex-favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/branding/mnzonex-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/branding/mnzonex-favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/branding/mnzonex-apple-icon.png">
+  <link rel="manifest" href="../assets/images/branding/mnzonex.webmanifest">
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="../assets/css/base.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+    <style>
+        body {
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            justify-content: center;
+            background: radial-gradient(circle at center, #111 0%, #000 100%);
+        }
+
+        .tool-container {
+            max-width: 500px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 50px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .ip-box {
+            font-size: 36px;
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px var(--primary-glow);
+        }
+
+        .details {
+            text-align: left;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .detail-item span {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .loader {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--primary);
+            border-top: 4px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+            display: none;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="tool-container">
+        <h1><i class="fa-solid fa-earth-americas"></i> IP Checker</h1>
+        <div class="loader" id="loader"></div>
+        <div id="result">
+            <div class="ip-box" id="ipAddress">Loading...</div>
+            <div class="details">
+                <div class="detail-item">Network <span>Loading...</span></div>
+                <div class="detail-item">Location <span>Loading...</span></div>
+                <div class="detail-item">ASN <span>Loading...</span></div>
+                <p style="font-size: 10px; text-align: center; margin-top: 20px; color: var(--text-muted);">Real-time
+                    data from public API</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const ipDisplay = document.getElementById('ipAddress');
+        const detailsContainer = document.querySelector('.details');
+
+        async function getIP() {
+            const loader = document.getElementById('loader');
+            const resultDiv = document.getElementById('result');
+            loader.style.display = 'block';
+            resultDiv.style.opacity = '0.3';
+
+            try {
+                // Primary API
+                let response = await fetch('https://ipapi.co/json/');
+                if (!response.ok) throw new Error('Primary API failed');
+                let data = await response.json();
+                updateUI(data);
+            } catch (error) {
+                console.warn("Primary API failed, trying fallback...");
+                try {
+                    // Fallback API (ipify for just the IP)
+                    const fbRes = await fetch('https://api.ipify.org?format=json');
+                    const fbData = await fbRes.json();
+                    ipDisplay.textContent = fbData.ip;
+                    detailsContainer.innerHTML = `<p style="color:var(--text-muted)">Detailed info unavailable (Fallback mode)</p>`;
+                } catch (fbError) {
+                    ipDisplay.textContent = "Offline/Error";
+                    ipDisplay.style.color = "#ff4444";
+                }
+            } finally {
+                loader.style.display = 'none';
+                resultDiv.style.opacity = '1';
+            }
+        }
+
+        function updateUI(data) {
+            ipDisplay.textContent = data.ip;
+            ipDisplay.style.color = "#fff";
+            detailsContainer.innerHTML = `
+                <div class="detail-item">Network <span>${data.org || 'N/A'}</span></div>
+                <div class="detail-item">Location <span>${data.city || ''}, ${data.region || ''}, ${data.country_name || ''}</span></div>
+                <div class="detail-item">ASN <span>${data.asn || 'N/A'}</span></div>
+                <div class="detail-item">Provider <span>${data.isp || 'N/A'}</span></div>
+                <p style="font-size: 10px; text-align: center; margin-top: 20px; color: var(--text-muted);">Real-time data from public API</p>
+            `;
+        }
+        getIP();
+    </script>
+</body>
+
+</html>

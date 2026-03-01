@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binary Converter | MN ZONEX 2.0</title>
+
+  <!-- Primary Meta Tags -->
+  <meta name="title" content="Binary Converter | MN ZONEX 2.0">
+  <meta name="description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta name="theme-color" content="#00e5ff">
+  
+  <!-- Canonical Url -->
+  <link rel="canonical" href="https://mnzonex.github.io/tools/binary-conv.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mnzonex.github.io/tools/binary-conv.html">
+  <meta property="og:title" content="Binary Converter | MN ZONEX 2.0">
+  <meta property="og:description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta property="og:image" content="https://mnzonex.github.io/assets/images/branding/mnzonex-512x512.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://mnzonex.github.io/tools/binary-conv.html">
+  <meta property="twitter:title" content="Binary Converter | MN ZONEX 2.0">
+  <meta property="twitter:description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta property="twitter:image" content="https://mnzonex.github.io/assets/images/branding/mnzonex-512x512.png">
+
+  <!-- Favicon & App Icons -->
+  <link rel="icon" type="image/x-icon" href="../assets/images/branding/mnzonex-favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/branding/mnzonex-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/branding/mnzonex-favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/branding/mnzonex-apple-icon.png">
+  <link rel="manifest" href="../assets/images/branding/mnzonex.webmanifest">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/base.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+    <style>
+        body {
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            justify-content: center;
+            background: radial-gradient(circle at center, #111 0%, #000 100%);
+        }
+
+        .tool-container {
+            max-width: 700px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            font-weight: 800;
+            color: var(--primary);
+            text-align: center;
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: #fff;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            resize: none;
+            margin-bottom: 20px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .btn-tool {
+            padding: 12px 25px;
+            background: var(--primary);
+            color: #000;
+            font-weight: 800;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-tool:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="tool-container">
+        <h1><i class="fa-solid fa-code-branch"></i> Binary Converter</h1>
+        <textarea id="textInput" placeholder="Enter Text here..."></textarea>
+        <div class="btn-group">
+            <button class="btn-tool" onclick="toBinary()">Text to Binary</button>
+            <button class="btn-tool" onclick="fromBinary()">Binary to Text</button>
+        </div>
+        <textarea id="outputArea" style="margin-top:20px" placeholder="Result will appear here..." readonly></textarea>
+    </div>
+    <script>
+        function toBinary() {
+            const str = document.getElementById('textInput').value;
+            let res = "";
+            for (let i = 0; i < str.length; i++) {
+                res += str[i].charCodeAt(0).toString(2).padStart(8, '0') + " ";
+            }
+            document.getElementById('outputArea').value = res.trim();
+        }
+        function fromBinary() {
+            const bin = document.getElementById('textInput').value;
+            try {
+                const res = bin.split(' ').map(b => String.fromCharCode(parseInt(b, 2))).join('');
+                document.getElementById('outputArea').value = res;
+            } catch (e) { alert('Invalid Binary Format!'); }
+        }
+    </script>
+</body>
+
+</html>

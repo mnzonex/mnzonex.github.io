@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lorem Ipsum Generator | MN ZONEX 2.0</title>
+
+  <!-- Primary Meta Tags -->
+  <meta name="title" content="Lorem Ipsum Generator | MN ZONEX 2.0">
+  <meta name="description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta name="theme-color" content="#00e5ff">
+  
+  <!-- Canonical Url -->
+  <link rel="canonical" href="https://mnzonex.github.io/tools/lorem-ipsum.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mnzonex.github.io/tools/lorem-ipsum.html">
+  <meta property="og:title" content="Lorem Ipsum Generator | MN ZONEX 2.0">
+  <meta property="og:description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta property="og:image" content="https://mnzonex.github.io/assets/images/branding/mnzonex-512x512.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://mnzonex.github.io/tools/lorem-ipsum.html">
+  <meta property="twitter:title" content="Lorem Ipsum Generator | MN ZONEX 2.0">
+  <meta property="twitter:description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta property="twitter:image" content="https://mnzonex.github.io/assets/images/branding/mnzonex-512x512.png">
+
+  <!-- Favicon & App Icons -->
+  <link rel="icon" type="image/x-icon" href="../assets/images/branding/mnzonex-favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/branding/mnzonex-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/branding/mnzonex-favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/branding/mnzonex-apple-icon.png">
+  <link rel="manifest" href="../assets/images/branding/mnzonex.webmanifest">
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="../assets/css/base.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+    <style>
+        body {
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            justify-content: center;
+            background: radial-gradient(circle at center, #111 0%, #000 100%);
+        }
+
+        .tool-container {
+            max-width: 650px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            font-weight: 800;
+            color: var(--primary);
+            text-align: center;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        input[type="number"] {
+            width: 80px;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            color: #fff;
+            text-align: center;
+        }
+
+        .result-area {
+            width: 100%;
+            height: 250px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: #ccc;
+            padding: 20px;
+            font-family: inherit;
+            line-height: 1.6;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+
+        .btn-tool {
+            padding: 12px 30px;
+            background: var(--primary);
+            color: #000;
+            font-weight: 800;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase;
+        }
+
+        .btn-tool:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="tool-container">
+        <h1><i class="fa-solid fa-align-left"></i> Lorem Ipsum Generator</h1>
+        <div class="controls">
+            <span style="color: var(--text-muted);">Paragraphs:</span>
+            <input type="number" id="paras" value="3" min="1" max="10">
+            <button class="btn-tool" onclick="generate()">Generate</button>
+        </div>
+        <div class="result-area" id="result">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat.
+        </div>
+        <button class="btn-tool"
+            style="width: 100%; background: rgba(255,255,255,0.05); color: #fff; border: 1px solid var(--glass-border);"
+            onclick="copy()">Copy Text</button>
+    </div>
+
+    <script>
+        const textBank = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam non finibus erat. Mauris quis urna sit amet tellus eleifend viverra. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Sed vitae massa sit amet augue consectetur gravida. Proin scelerisque urna at felis tincidunt, quis viverra enim gravida. Integer nec sapien sem. Quisque vitae nisl nec purus gravida accumsan. Cras at libero sed est mollis elementum. Etiam pharetra, tellus vel elementum varius, nisi ante sollicitudin felis, vel cursus elit mi ut justo. Curabitur sed lectus sed diam tempor feugiat. Sed euismod, libero vel tincidunt eleifend, massa purus gravida nisl, sed fermentum lectus mi in augue. Phasellus ut odio vel nisl molestie vulputate. Quisque tristique velit in est feugiat, non sollicitudin quam pretium. Maecenas commodo tellus eu elit placerat porttitor. Suspendisse eu congue ante. ";
+
+        function generate() {
+            const count = parseInt(document.getElementById('paras').value);
+            let result = "";
+            for (let i = 0; i < count; i++) {
+                result += "<p>" + textBank.repeat(Math.floor(Math.random() * 2) + 1) + "</p><br>";
+            }
+            document.getElementById('result').innerHTML = result;
+        }
+
+        function copy() {
+            const text = document.getElementById('result').innerText;
+            navigator.clipboard.writeText(text).then(() => alert('Copied to clipboard!'));
+        }
+    </script>
+</body>
+
+</html>

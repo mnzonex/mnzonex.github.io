@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Neon Penguin Fly Pro</title>
+
+  <!-- Primary Meta Tags -->
+  <meta name="title" content="Neon Penguin Fly Pro">
+  <meta name="description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta name="theme-color" content="#00e5ff">
+  
+  <!-- Canonical Url -->
+  <link rel="canonical" href="https://mnzonex.github.io/games/game7/neon-penguin-game.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mnzonex.github.io/games/game7/neon-penguin-game.html">
+  <meta property="og:title" content="Neon Penguin Fly Pro">
+  <meta property="og:description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta property="og:image" content="https://mnzonex.github.io/assets/images/branding/mnzonex-512x512.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://mnzonex.github.io/games/game7/neon-penguin-game.html">
+  <meta property="twitter:title" content="Neon Penguin Fly Pro">
+  <meta property="twitter:description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta property="twitter:image" content="https://mnzonex.github.io/assets/images/branding/mnzonex-512x512.png">
+
+  <!-- Favicon & App Icons -->
+  <link rel="icon" type="image/x-icon" href="../../assets/images/branding/mnzonex-favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/images/branding/mnzonex-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/branding/mnzonex-favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../assets/images/branding/mnzonex-apple-icon.png">
+  <link rel="manifest" href="../../assets/images/branding/mnzonex.webmanifest">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+        :root {
+            --bg-color: #000a1f;
+            --accent-color: #00f2ff;
+            --player-color: #ff007f;
+            --pipe-color-top: #33ff00;
+            --pipe-color-bottom: #ffcc00;
+            --ground-color: #003366;
+            --text-color: #fff;
+            --menu-bg: rgba(0,0,0,0.85);
+        }
+
+        body, html {
+            margin: 0; padding: 0; height: 100%;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Orbitron', sans-serif;
+            overflow: hidden;
+            display: flex; flex-direction: column;
+            touch-action: none; /* Mobile Scroll නවත්තන්න */
+        }
+
+        .main-container {
+            display: flex; flex-direction: column;
+            height: 100%; width: 100%; max-width: 600px;
+            margin: 0 auto;
+            border-left: 2px solid #222; border-right: 2px solid #222;
+        }
+
+        .ad-banner {
+            height: 50px; background: #111; color: #555;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 11px; flex-shrink: 0;
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .game-area {
+            flex-grow: 1; position: relative;
+            background: radial-gradient(circle at bottom, #001a4f 0%, #000a1f 100%);
+            overflow: hidden;
+            display: flex; justify-content: center; align-items: center;
+        }
+
+        canvas {
+            display: block;
+            /* Canvas එක Wrapper එකට හරියටම ෆිට් වෙන්න */
+            width: 100%; height: 100%;
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.1);
+        }
+
+        /* UI Layer */
+        #ui-layer {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            display: flex; flex-direction: column;
+            z-index: 5;
+        }
+
+        #score-display {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 32px; text-align: center; width: 100%; margin-top: 40px;
+            color: var(--player-color);
+            text-shadow: 0 0 10px var(--player-color);
+        }
+
+        /* Menu */
+        #menu-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--menu-bg);
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            pointer-events: auto; z-index: 20;
+        }
+
+        h1 { 
+            margin: 0; color: var(--accent-color); 
+            text-shadow: 0 0 15px var(--accent-color); 
+            font-size: 2.2rem; text-align: center; line-height: 1.4;
+            font-family: 'Press Start 2P', cursive;
+        }
+        
+        p { 
+            color: #ccc; margin: 20px 0 30px 0; 
+            text-align: center; font-size: 1rem;
+        }
+
+        button {
+            background: rgba(0,0,0,0.5); color: #fff;
+            border: 3px solid var(--player-color);
+            padding: 18px 50px; font-size: 1.2rem;
+            font-family: 'Orbitron', sans-serif; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 2px;
+            box-shadow: 0 0 15px var(--player-color);
+            border-radius: 5px;
+            pointer-events: auto !important; /* Button Click අනිවාර්ය කරන්න */
+            position: relative; z-index: 30;
+        }
+        
+        button:active { background: var(--player-color); color: #000; }
+
+        .copyright {
+            text-align: center; font-size: 10px; color: #444; padding: 8px;
+            background: #000; font-family: 'Orbitron', sans-serif;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+    <div class="ad-banner">ADVERTISEMENT AREA 1</div>
+
+    <div class="game-area" id="game-wrapper">
+        <canvas id="gameCanvas"></canvas>
+        
+        <div id="ui-layer">
+            <div id="score-display">0</div>
+        </div>
+
+        <div id="menu-overlay">
+            <h1>NEON<br>PENGUIN</h1>
+            <p>Tap to Fly!</p>
+            <button id="start-btn">START</button>
+        </div>
+    </div>
+
+    <div class="ad-banner">ADVERTISEMENT AREA 2</div>
+    <div class="copyright">© 2026 MN ZONEX. All Rights Reserved.</div>
+</div>
+
+<script>
+    // --- Audio System ---
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    
+    function playTone(freq, type, duration, volume = 0.1) {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type; 
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(volume, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+    }
+
+    const sounds = {
+        flap: () => playTone(600, 'triangle', 0.1, 0.1),
+        score: () => playTone(1200, 'sine', 0.08, 0.1),
+        hit: () => playTone(150, 'sawtooth', 0.3, 0.2),
+        gameOver: () => { 
+            setTimeout(() => playTone(300, 'sawtooth', 0.2, 0.2), 0);
+            setTimeout(() => playTone(100, 'sawtooth', 0.4, 0.2), 200);
+        }
+    };
+
+    // --- Variables & Elements ---
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const wrapper = document.getElementById('game-wrapper');
+    const menuOverlay = document.getElementById('menu-overlay');
+    const startBtn = document.getElementById('start-btn');
+    const scoreDisplay = document.getElementById('score-display');
+    const menuTitle = document.querySelector('h1');
+    const menuText = document.querySelector('p');
+
+    let isRunning = false;
+    let gameStarted = false; // පළමු ටැප් එක එනකම් Gravity නවත්තන්න
+    let animationId;
+    let score = 0;
+    let highscore = localStorage.getItem('penguinHighscore') || 0;
+
+    let player = { x: 0, y: 0, r: 18, dy: 0, gravity: 0, jumpPower: 0, color: 'var(--player-color)' };
+    let pipes = [];
+    let pipeWidth = 60;
+    let pipeSpeed = 0;
+    
+    // Configs
+    const pipeVerticalGap = 160; 
+    const pipeHorizontalGap = 220; 
+    const groundHeight = 20;
+
+    // --- Functions ---
+
+    function resize() {
+        // Wrapper එකේ තරමට Canvas එක හදනවා
+        const rect = wrapper.getBoundingClientRect();
+        canvas.width = rect.width;
+        canvas.height = rect.height;
+        
+        // Physics Screen Size එකට ගැලපෙන්න හදනවා
+        player.gravity = canvas.height * 0.0008; // උස අනුව ගුරුත්වාකර්ෂණය
+        player.jumpPower = canvas.height * -0.013; // උස අනුව පනින ප්‍රමාණය
+        pipeSpeed = canvas.width * 0.006; // පළල අනුව වේගය
+        
+        // Player ව Screen එකේ හරියටම තියනවා
+        player.x = canvas.width * 0.25; 
+        if (!isRunning) {
+            player.y = canvas.height / 2;
+            draw(); // Resize වෙද්දී Menu එක පිටිපස්සේ ගේම් එක පේන්න
+        }
+    }
+
+    function resetGame() {
+        score = 0;
+        scoreDisplay.innerText = score;
+        player.y = canvas.height / 2;
+        player.dy = 0;
+        pipes = [];
+        addPipe(); 
+        
+        isRunning = true;
+        gameStarted = false; // තාම Tap කරලා නෑ
+        
+        menuTitle.innerHTML = "NEON<br>PENGUIN";
+        menuText.innerText = "Tap to Fly!";
+    }
+
+    function addPipe() {
+        const minPipeH = 50;
+        const maxPipeH = canvas.height - groundHeight - pipeVerticalGap - minPipeH;
+        
+        // Random උසක් ගන්නවා
+        const topH = Math.random() * (maxPipeH - minPipeH) + minPipeH;
+
+        pipes.push({
+            x: canvas.width, // Screen එකේ දකුණු කොනෙන් පටන් ගන්නවා
+            topHeight: topH,
+            bottomHeight: canvas.height - groundHeight - topH - pipeVerticalGap,
+            passed: false
+        });
+    }
+
+    function update() {
+        // පළවෙනි Tap එක දෙනකම් Player වැටෙන්නේ නෑ
+        if (!gameStarted) return;
+
+        // Gravity
+        player.dy += player.gravity;
+        player.y += player.dy;
+
+        // Ground Collision
+        if (player.y + player.r >= canvas.height - groundHeight) {
+            die(); return;
+        }
+
+        // Ceiling Collision
+        if (player.y - player.r <= 0) {
+            player.y = player.r;
+            player.dy = 0;
+        }
+
+        // Pipe Logic
+        for (let i = 0; i < pipes.length; i++) {
+            let p = pipes[i];
+            p.x -= pipeSpeed;
+
+            // Collision Check
+            if (player.x + player.r > p.x && player.x - player.r < p.x + pipeWidth) {
+                if (player.y - player.r < p.topHeight || player.y + player.r > canvas.height - groundHeight - p.bottomHeight) {
+                    die(); return;
+                }
+            }
+
+            // Score Check
+            if (p.x + pipeWidth < player.x && !p.passed) {
+                score++;
+                scoreDisplay.innerText = score;
+                p.passed = true;
+                sounds.score();
+            }
+
+            // Remove old pipes
+            if (p.x + pipeWidth < 0) {
+                pipes.shift();
+                i--;
+            }
+        }
+
+        // Add new pipes
+        if (pipes.length > 0 && pipes[pipes.length - 1].x < canvas.width - pipeHorizontalGap) {
+            addPipe();
+        }
+    }
+
+    function draw() {
+        // Clear Screen
+        ctx.fillStyle = '#000a1f';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Draw Pipes
+        pipes.forEach(p => {
+            // Top
+            ctx.fillStyle = '#33ff00';
+            ctx.shadowBlur = 15; ctx.shadowColor = '#33ff00';
+            ctx.fillRect(p.x, 0, pipeWidth, p.topHeight);
+            
+            // Bottom
+            ctx.fillStyle = '#ffcc00';
+            ctx.shadowColor = '#ffcc00';
+            ctx.fillRect(p.x, canvas.height - groundHeight - p.bottomHeight, pipeWidth, p.bottomHeight);
+        });
+        ctx.shadowBlur = 0;
+
+        // Draw Ground
+        ctx.fillStyle = '#003366';
+        ctx.fillRect(0, canvas.height - groundHeight, canvas.width, groundHeight);
+
+        // Draw Player (Penguin)
+        ctx.save();
+        ctx.translate(player.x, player.y);
+        // ඇලවෙන effect එක (Falling rotation)
+        if(gameStarted) ctx.rotate(Math.min(Math.PI / 4, Math.max(-Math.PI / 4, (player.dy * 0.1))));
+        
+        // Body
+        ctx.beginPath();
+        ctx.ellipse(0, 0, player.r * 0.9, player.r, 0, 0, Math.PI * 2);
+        ctx.fillStyle = '#ff007f'; ctx.shadowBlur = 20; ctx.shadowColor = '#ff007f';
+        ctx.fill();
+        
+        // Eye
+        ctx.shadowBlur = 0;
+        ctx.beginPath(); ctx.arc(6, -6, 5, 0, Math.PI*2); ctx.fillStyle = '#fff'; ctx.fill();
+        ctx.beginPath(); ctx.arc(8, -6, 2, 0, Math.PI*2); ctx.fillStyle = '#000'; ctx.fill();
+        
+        // Beak
+        ctx.beginPath(); ctx.moveTo(10, 0); ctx.lineTo(22, 4); ctx.lineTo(10, 8);
+        ctx.fillStyle = '#ff9900'; ctx.fill();
+
+        // Wing
+        ctx.beginPath(); ctx.ellipse(-5, 5, 8, 4, -0.5, 0, Math.PI*2);
+        ctx.fillStyle = '#cc0066'; ctx.fill();
+        
+        ctx.restore();
+    }
+
+    function die() {
+        isRunning = false;
+        sounds.hit();
+        sounds.gameOver();
+        
+        if (score > highscore) {
+            highscore = score;
+            localStorage.setItem('penguinHighscore', highscore);
+        }
+
+        menuOverlay.style.display = 'flex';
+        menuTitle.innerHTML = `GAME<br>OVER`;
+        menuText.innerHTML = `Score: ${score}<br>Best: ${highscore}`;
+        document.querySelector('button').innerText = "RETRY";
+    }
+
+    function loop() {
+        if (!isRunning) return;
+        update();
+        draw();
+        animationId = requestAnimationFrame(loop);
+    }
+
+    // --- Inputs ---
+    function jump() {
+        if (isRunning) {
+            if (!gameStarted) gameStarted = true; // මෙතනින් තමයි Gravity පටන් ගන්නේ
+            player.dy = player.jumpPower;
+            sounds.flap();
+        }
+    }
+
+    // Touch & Click events
+    wrapper.addEventListener('mousedown', (e) => {
+        if(e.target.tagName !== 'BUTTON') jump();
+    });
+    
+    wrapper.addEventListener('touchstart', (e) => {
+        if(e.target.tagName !== 'BUTTON') {
+            e.preventDefault(); // Scroll වෙන්න නොදී Jump කරනවා
+            jump();
+        }
+    }, {passive: false});
+
+    // Start Button
+    startBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        startGame();
+    });
+    
+    startBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault(); e.stopPropagation();
+        startGame();
+    });
+
+    function startGame() {
+        if(audioCtx.state === 'suspended') audioCtx.resume();
+        menuOverlay.style.display = 'none';
+        resetGame();
+        if(animationId) cancelAnimationFrame(animationId);
+        loop();
+    }
+
+    // Window Resize handling
+    window.addEventListener('resize', resize);
+    
+    // Initial Setup
+    resize();
+    draw(); // මුලින්ම පෙන්ගුයින්ව අඳින්න
+</script>
+</body>
+</html>

@@ -1,0 +1,522 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Brick Breaker</title>
+
+  <!-- Primary Meta Tags -->
+  <meta name="title" content="Brick Breaker">
+  <meta name="description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta name="theme-color" content="#00e5ff">
+  
+  <!-- Canonical Url -->
+  <link rel="canonical" href="https://mnzonex.github.io/games/game6/brick-breaker-game.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mnzonex.github.io/games/game6/brick-breaker-game.html">
+  <meta property="og:title" content="Brick Breaker">
+  <meta property="og:description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta property="og:image" content="https://mnzonex.github.io/assets/images/branding/mnzonex-512x512.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://mnzonex.github.io/games/game6/brick-breaker-game.html">
+  <meta property="twitter:title" content="Brick Breaker">
+  <meta property="twitter:description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta property="twitter:image" content="https://mnzonex.github.io/assets/images/branding/mnzonex-512x512.png">
+
+  <!-- Favicon & App Icons -->
+  <link rel="icon" type="image/x-icon" href="../../assets/images/branding/mnzonex-favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/images/branding/mnzonex-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/branding/mnzonex-favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../assets/images/branding/mnzonex-apple-icon.png">
+  <link rel="manifest" href="../../assets/images/branding/mnzonex.webmanifest">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+        :root {
+            --bg-color: #050510;
+            --accent-color: #00f2ff;
+            --paddle-color: #ff0055;
+            --control-bg: #111122;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background-color: var(--bg-color);
+            color: #fff;
+            font-family: 'Orbitron', sans-serif;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            touch-action: none; /* Prevent scroll on mobile */
+        }
+
+        /* --- Layout --- */
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
+            max-width: 600px; /* Mobile optimized width */
+            margin: 0 auto;
+            border-left: 1px solid #333;
+            border-right: 1px solid #333;
+        }
+
+        .ad-banner {
+            height: 50px;
+            background: #222;
+            color: #555;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+            flex-shrink: 0;
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .game-area {
+            flex-grow: 1;
+            position: relative;
+            background: radial-gradient(circle, #1a1a2e 0%, #000000 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        canvas {
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* --- Separate Control Pad --- */
+        .control-pad {
+            height: 120px; /* Big enough for thumb */
+            background-color: var(--control-bg);
+            border-top: 3px solid var(--paddle-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            flex-shrink: 0;
+            cursor: crosshair;
+        }
+
+        .control-hint {
+            color: #444;
+            font-size: 14px;
+            pointer-events: none;
+            user-select: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .slider-thumb {
+            width: 80px;
+            height: 6px;
+            background: var(--paddle-color);
+            border-radius: 4px;
+            position: absolute;
+            top: 10px; /* Visual indicator of paddle position */
+            box-shadow: 0 0 10px var(--paddle-color);
+            transition: left 0.05s linear;
+        }
+
+        /* --- Overlays --- */
+        #ui-layer {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .hud {
+            display: flex;
+            justify-content: space-between;
+            font-size: 18px;
+            text-shadow: 0 0 5px var(--accent-color);
+        }
+
+        #menu-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            pointer-events: auto;
+            z-index: 10;
+        }
+
+        h1 { margin: 0; color: var(--accent-color); text-shadow: 0 0 20px var(--accent-color); font-size: 2.5rem; text-align: center;}
+        p { color: #aaa; margin-bottom: 30px; }
+
+        button {
+            background: transparent;
+            color: #fff;
+            border: 2px solid var(--paddle-color);
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-family: 'Orbitron', sans-serif;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 0 0 15px var(--paddle-color);
+            transition: all 0.3s;
+        }
+        button:hover { background: var(--paddle-color); color: #000; }
+
+        .copyright {
+            text-align: center;
+            font-size: 10px;
+            color: #444;
+            padding: 5px;
+            background: #000;
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+    <div class="ad-banner">ADVERTISEMENT AREA 1</div>
+
+    <div class="game-area" id="game-wrapper">
+        <canvas id="gameCanvas"></canvas>
+        
+        <div id="ui-layer">
+            <div class="hud">
+                <span id="score-display">SCORE: 0</span>
+                <span id="lives-display">LIVES: 3</span>
+            </div>
+        </div>
+
+        <div id="menu-overlay">
+            <h1>BRICKS<br>BREAKER</h1>
+            <p>Drag in the bottom area to move</p>
+            <button id="start-btn">START GAME</button>
+        </div>
+    </div>
+
+    <div class="control-pad" id="control-pad">
+        <div class="slider-thumb" id="control-thumb"></div>
+        <div class="control-hint">DRAG HERE TO MOVE</div>
+    </div>
+
+    <div class="ad-banner">ADVERTISEMENT AREA 2</div>
+    <div class="copyright">© 2026 MN ZONEX. All Rights Reserved.</div>
+</div>
+
+<script>
+    // --- AUDIO SYSTEM (Web Audio API - No files needed) ---
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    
+    function playTone(freq, type, duration) {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+    }
+
+    const sounds = {
+        hit: () => playTone(400, 'square', 0.1),
+        wall: () => playTone(200, 'sine', 0.1),
+        paddle: () => playTone(600, 'triangle', 0.15),
+        win: () => {
+            playTone(600, 'sine', 0.2);
+            setTimeout(() => playTone(800, 'sine', 0.4), 200);
+        },
+        lose: () => playTone(150, 'sawtooth', 0.5)
+    };
+
+    // --- GAME ENGINE ---
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const wrapper = document.getElementById('game-wrapper');
+    const controlPad = document.getElementById('control-pad');
+    const controlThumb = document.getElementById('control-thumb');
+    
+    // UI Elements
+    const menuOverlay = document.getElementById('menu-overlay');
+    const startBtn = document.getElementById('start-btn');
+    const scoreDisplay = document.getElementById('score-display');
+    const livesDisplay = document.getElementById('lives-display');
+
+    let isRunning = false;
+    let animationId;
+    let score = 0;
+    let lives = 3;
+
+    // Physics Constants
+    const BASE_SPEED = 5;
+    let speedMultiplier = 1;
+
+    // Game Objects
+    let ball = { x: 0, y: 0, dx: 0, dy: 0, r: 8, speed: BASE_SPEED };
+    let paddle = { x: 0, w: 100, h: 15, color: '#ff0055' };
+    let bricks = [];
+    
+    // Grid Config
+    const rows = 5;
+    const cols = 6;
+    const colors = ['#ff0055', '#ff9900', '#ffff00', '#00ff55', '#00d2ff'];
+
+    function resize() {
+        // Fit canvas to game-area
+        const rect = wrapper.getBoundingClientRect();
+        canvas.width = rect.width;
+        canvas.height = rect.height;
+        
+        // Reset objects relative to new size
+        if(!isRunning) resetLevel();
+        paddle.y = canvas.height - 30;
+    }
+
+    function initBricks() {
+        bricks = [];
+        const padding = 10;
+        const width = (canvas.width - (padding * (cols + 1))) / cols;
+        const height = 25;
+        
+        for(let r=0; r<rows; r++) {
+            for(let c=0; c<cols; c++) {
+                bricks.push({
+                    x: (c * (width + padding)) + padding,
+                    y: (r * (height + padding)) + 50,
+                    w: width,
+                    h: height,
+                    status: 1,
+                    color: colors[r]
+                });
+            }
+        }
+    }
+
+    function resetLevel() {
+        paddle.w = canvas.width * 0.2; // Paddle is 20% of screen width
+        paddle.x = (canvas.width - paddle.w) / 2;
+        resetBall();
+        initBricks();
+        draw();
+    }
+
+    function resetBall() {
+        ball.x = canvas.width / 2;
+        ball.y = canvas.height - 50;
+        ball.speed = BASE_SPEED * (canvas.width / 400); // Scale speed by screen width
+        // Random start angle
+        let angle = (Math.random() * Math.PI / 3) + Math.PI / 3; // Between 60 and 120 degrees
+        ball.dx = ball.speed * Math.cos(angle) * (Math.random() > 0.5 ? 1 : -1);
+        ball.dy = -ball.speed * Math.sin(angle);
+    }
+
+    // --- PHYSICS ENGINE ---
+    function update() {
+        // Move Ball
+        ball.x += ball.dx;
+        ball.y += ball.dy;
+
+        // Wall Collisions
+        if (ball.x + ball.r > canvas.width || ball.x - ball.r < 0) {
+            ball.dx *= -1;
+            sounds.wall();
+        }
+        if (ball.y - ball.r < 0) {
+            ball.dy *= -1;
+            sounds.wall();
+        }
+
+        // Paddle Collision (Advanced Physics)
+        if (ball.y + ball.r > paddle.y && 
+            ball.x > paddle.x && 
+            ball.x < paddle.x + paddle.w) {
+            
+            // Calculate where it hit the paddle (-1 to 1)
+            let hitPoint = (ball.x - (paddle.x + paddle.w / 2)) / (paddle.w / 2);
+            
+            // Deflection angle logic (Max 60 degrees)
+            let angle = hitPoint * (Math.PI / 3); 
+            
+            // Calculate new velocity based on constant speed
+            let currentSpeed = Math.sqrt(ball.dx*ball.dx + ball.dy*ball.dy);
+            // Slight speed increase per hit
+            currentSpeed = Math.min(currentSpeed * 1.02, canvas.width * 0.03); 
+
+            ball.dx = currentSpeed * Math.sin(angle);
+            ball.dy = -currentSpeed * Math.cos(angle);
+            
+            sounds.paddle();
+        }
+
+        // Floor Collision (Lose Life)
+        if (ball.y - ball.r > canvas.height) {
+            lives--;
+            livesDisplay.innerText = "LIVES: " + lives;
+            sounds.lose();
+            if (lives <= 0) {
+                gameOver(false);
+            } else {
+                resetBall();
+            }
+        }
+
+        // Brick Collision
+        let activeBricks = 0;
+        for (let b of bricks) {
+            if (b.status === 1) {
+                activeBricks++;
+                if (ball.x > b.x && ball.x < b.x + b.w && 
+                    ball.y > b.y && ball.y < b.y + b.h) {
+                    ball.dy *= -1;
+                    b.status = 0;
+                    score += 10;
+                    scoreDisplay.innerText = "SCORE: " + score;
+                    sounds.hit();
+                }
+            }
+        }
+
+        if (activeBricks === 0) gameOver(true);
+    }
+
+    function draw() {
+        // Clear Screen with trail effect
+        ctx.fillStyle = 'rgba(5, 5, 16, 1)'; // Creates motion blur trail
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Draw Bricks
+        for (let b of bricks) {
+            if (b.status === 1) {
+                ctx.fillStyle = b.color;
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = b.color;
+                ctx.fillRect(b.x, b.y, b.w, b.h);
+                ctx.shadowBlur = 0;
+            }
+        }
+
+        // Draw Paddle
+        ctx.fillStyle = paddle.color;
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = paddle.color;
+        ctx.roundRect(paddle.x, paddle.y, paddle.w, paddle.h, 5);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+
+        // Draw Ball
+        ctx.beginPath();
+        ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI * 2);
+        ctx.fillStyle = '#fff';
+        ctx.fill();
+        ctx.closePath();
+    }
+
+    function loop() {
+        if (!isRunning) return;
+        update();
+        draw();
+        animationId = requestAnimationFrame(loop);
+    }
+
+    function gameOver(win) {
+        isRunning = false;
+        menuOverlay.style.display = 'flex';
+        document.querySelector('h1').innerHTML = win ? "LEVEL<br>COMPLETE" : "GAME<br>OVER";
+        if(win) sounds.win();
+    }
+
+    // --- SEPARATE CONTROL LOGIC ---
+    function movePaddle(clientX) {
+        if (!isRunning) return;
+        
+        // Get control pad bounds
+        const rect = controlPad.getBoundingClientRect();
+        
+        // Calculate relative position (0 to 1) inside control pad
+        let relativeX = clientX - rect.left;
+        
+        // Clamp value
+        relativeX = Math.max(0, Math.min(rect.width, relativeX));
+
+        // Update Visual Thumb
+        controlThumb.style.left = (relativeX - 40) + 'px'; // Center thumb
+
+        // Map Control Pad X to Game Canvas X
+        // Formula: (ControlX / ControlWidth) * CanvasWidth
+        let ratio = relativeX / rect.width;
+        let paddleNewX = (ratio * canvas.width) - (paddle.w / 2);
+
+        // Boundary check for paddle
+        paddle.x = Math.max(0, Math.min(canvas.width - paddle.w, paddleNewX));
+    }
+
+    // Mouse Events for Control Pad
+    controlPad.addEventListener('mousedown', (e) => {
+        document.addEventListener('mousemove', onDrag);
+        document.addEventListener('mouseup', stopDrag);
+        movePaddle(e.clientX);
+    });
+
+    function onDrag(e) { movePaddle(e.clientX); }
+    function stopDrag() { 
+        document.removeEventListener('mousemove', onDrag);
+        document.removeEventListener('mouseup', stopDrag);
+    }
+
+    // Touch Events for Control Pad
+    controlPad.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        movePaddle(e.touches[0].clientX);
+    }, {passive: false});
+
+    controlPad.addEventListener('touchmove', (e) => {
+        e.preventDefault();
+        movePaddle(e.touches[0].clientX);
+    }, {passive: false});
+
+
+    // --- INIT ---
+        // --- INIT ---
+    startBtn.addEventListener('click', () => {
+        if(audioCtx.state === 'suspended') audioCtx.resume();
+        score = 0;
+        lives = 3;
+        scoreDisplay.innerText = "SCORE: 0";
+        livesDisplay.innerText = "LIVES: 3";
+        menuOverlay.style.display = 'none';
+        
+              resetLevel(); 
+        
+        isRunning = true;
+        loop();
+    });
+
+    window.addEventListener('resize', resize);
+    resize();
+
+    // Polyfill for roundRect if needed
+    if (!ctx.roundRect) {
+        ctx.roundRect = function(x, y, w, h, r) { ctx.fillRect(x, y, w, h); };
+    }
+
+</script>
+</body>
+</html>
+
+

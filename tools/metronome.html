@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metronome | MN ZONEX 2.0</title>
+
+  <!-- Primary Meta Tags -->
+  <meta name="title" content="Metronome | MN ZONEX 2.0">
+  <meta name="description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta name="theme-color" content="#00e5ff">
+  
+  <!-- Canonical Url -->
+  <link rel="canonical" href="https://mnzonex.github.io/tools/metronome.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mnzonex.github.io/tools/metronome.html">
+  <meta property="og:title" content="Metronome | MN ZONEX 2.0">
+  <meta property="og:description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta property="og:image" content="https://mnzonex.github.io/assets/images/branding/mnzonex-512x512.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://mnzonex.github.io/tools/metronome.html">
+  <meta property="twitter:title" content="Metronome | MN ZONEX 2.0">
+  <meta property="twitter:description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta property="twitter:image" content="https://mnzonex.github.io/assets/images/branding/mnzonex-512x512.png">
+
+  <!-- Favicon & App Icons -->
+  <link rel="icon" type="image/x-icon" href="../assets/images/branding/mnzonex-favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/branding/mnzonex-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/branding/mnzonex-favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/branding/mnzonex-apple-icon.png">
+  <link rel="manifest" href="../assets/images/branding/mnzonex.webmanifest">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/base.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+    <style>
+        body {
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            justify-content: center;
+            background: radial-gradient(circle at center, #111 0%, #000 100%);
+        }
+
+        .tool-container {
+            max-width: 400px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 50px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            text-align: center;
+        }
+
+        .bpm-display {
+            font-size: 80px;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            accent-color: var(--primary);
+            margin-bottom: 30px;
+        }
+
+        .btn-play {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: none;
+            background: #fff;
+            color: #000;
+            font-size: 30px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-play:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .indicator {
+            width: 20px;
+            height: 20px;
+            background: #333;
+            border-radius: 50%;
+            margin: 20px auto;
+            transition: 0.1s;
+        }
+
+        .indicator.active {
+            background: var(--primary);
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="tool-container">
+        <h1><i class="fa-solid fa-drum"></i> Metronome</h1>
+        <div class="bpm-display" id="bpm">120</div>
+        <p style="color:var(--text-muted); margin-bottom:10px">BPM</p>
+        <input type="range" id="tempo" min="40" max="240" value="120" oninput="updateBPM()">
+        <div class="indicator" id="indicator"></div>
+        <button class="btn-play" id="playBtn" onclick="toggle()"><i class="fa-solid fa-play"></i></button>
+    </div>
+    <script>
+        let isPlaying = false;
+        let timer;
+        const bpmEl = document.getElementById('bpm');
+        const tempoInput = document.getElementById('tempo');
+        const playBtn = document.getElementById('playBtn');
+        const indicator = document.getElementById('indicator');
+
+        function updateBPM() {
+            bpmEl.innerText = tempoInput.value;
+            if (isPlaying) { stop(); start(); }
+        }
+
+        function toggle() {
+            if (isPlaying) stop();
+            else start();
+        }
+
+        function start() {
+            isPlaying = true;
+            playBtn.innerHTML = '<i class="fa-solid fa-stop"></i>';
+            const ms = 60000 / tempoInput.value;
+            timer = setInterval(() => {
+                indicator.classList.add('active');
+                setTimeout(() => indicator.classList.remove('active'), 50);
+                // Audio beep can be added here
+            }, ms);
+        }
+
+        function stop() {
+            isPlaying = false;
+            playBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
+            clearInterval(timer);
+        }
+    </script>
+</body>
+
+</html>

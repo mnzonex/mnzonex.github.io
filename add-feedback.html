@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Share Feedback | MN ZONEX 2.0</title>
+
+  <!-- Primary Meta Tags -->
+  <meta name="title" content="Share Feedback | MN ZONEX 2.0">
+  <meta name="description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta name="theme-color" content="#00e5ff">
+  
+  <!-- Canonical Url -->
+  <link rel="canonical" href="https://mnzonex.github.io/add-feedback.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mnzonex.github.io/add-feedback.html">
+  <meta property="og:title" content="Share Feedback | MN ZONEX 2.0">
+  <meta property="og:description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta property="og:image" content="https://mnzonex.github.io/assets/images/branding/mnzonex-512x512.png">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://mnzonex.github.io/add-feedback.html">
+  <meta property="twitter:title" content="Share Feedback | MN ZONEX 2.0">
+  <meta property="twitter:description" content="Ultimate platform for Games, Services, Business, and Community.">
+  <meta property="twitter:image" content="https://mnzonex.github.io/assets/images/branding/mnzonex-512x512.png">
+
+  <!-- Favicon & App Icons -->
+  <link rel="icon" type="image/x-icon" href="assets/images/branding/mnzonex-favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/branding/mnzonex-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/images/branding/mnzonex-favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/images/branding/mnzonex-apple-icon.png">
+  <link rel="manifest" href="assets/images/branding/mnzonex.webmanifest">
+
+
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/layout.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/animations.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+
+    <style>
+        .page-header {
+            padding: 150px 0 60px;
+            text-align: center;
+            background: radial-gradient(circle at 50% 0%, var(--primary-glow), transparent 70%);
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            padding: 40px;
+            border-radius: 30px;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: #fff;
+            font-family: inherit;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        textarea.form-control {
+            height: 150px;
+            resize: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header class="navbar navbar-scrolled">
+        <div class="logo" onclick="window.location.href='index.html'" style="cursor:pointer">MN ZONEX<span> 2.0</span>
+        </div>
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="games.html">Games</a>
+            <a href="services.html">Services</a>
+            <a href="business.html">Business</a>
+            <a href="network.html">Releases</a>
+            <a href="social.html">Social</a>
+            <a href="tools.html">Tools</a>
+            <a href="feedback.html">Feedback</a>
+        </nav>
+        <div class="mobile-menu-btn">
+            <i class="fa-solid fa-bars-staggered"></i>
+        </div>
+    </header>
+
+    <header class="page-header">
+        <div class="container">
+            <h1 class="hero-title" style="font-size: 56px;">Your Thoughts</h1>
+            <p class="hero-subtitle" style="margin: 0 auto;">Help us define the future of MN ZONEX with your valuable
+                feedback.</p>
+        </div>
+    </header>
+
+    <section class="section-padding">
+        <div class="container">
+            <div class="form-container reveal-on-scroll">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="user-name" class="form-control" placeholder="Enter your name">
+                </div>
+                <div class="form-group">
+                    <label>Feedback Message</label>
+                    <textarea id="user-feedback" class="form-control" placeholder="What's on your mind?"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Rating</label>
+                    <div id="rating-stars" style="font-size: 24px; color: #333; cursor: pointer;">
+                        <i class="fa-solid fa-star" data-value="1"></i>
+                        <i class="fa-solid fa-star" data-value="2"></i>
+                        <i class="fa-solid fa-star" data-value="3"></i>
+                        <i class="fa-solid fa-star" data-value="4"></i>
+                        <i class="fa-solid fa-star" data-value="5"></i>
+                    </div>
+                </div>
+                <button id="submit-feedback" class="btn" style="width: 100%;">Submit Feedback <i
+                        class="fa-solid fa-paper-plane" style="margin-left: 10px;"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container text-center">
+            <div class="logo" style="margin-bottom: 20px;">MN ZONEX<span> 2.0</span></div>
+            <p style="font-size: 13px; color: #555;">&copy; 2026 MN ZONEX. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+    <script>
+        // Rating logic
+        let currentRating = 0;
+        const stars = document.querySelectorAll('#rating-stars i');
+
+        stars.forEach(star => {
+            star.addEventListener('mouseover', function () {
+                const val = this.dataset.value;
+                highlightStars(val);
+            });
+
+            star.addEventListener('mouseleave', function () {
+                highlightStars(currentRating);
+            });
+
+            star.addEventListener('click', function () {
+                currentRating = this.dataset.value;
+                highlightStars(currentRating);
+            });
+        });
+
+        function highlightStars(val) {
+            stars.forEach(star => {
+                if (star.dataset.value <= val) {
+                    star.style.color = 'gold';
+                } else {
+                    star.style.color = '#333';
+                }
+            });
+        }
+
+        // Submit logic
+        document.getElementById("submit-feedback").addEventListener("click", () => {
+            const name = document.getElementById("user-name").value.trim();
+            const msg = document.getElementById("user-feedback").value.trim();
+
+            if (!name || !msg || currentRating === 0) {
+                alert("Please complete all fields and provide a rating!");
+                return;
+            }
+
+            alert("Thank you " + name + "! Your feedback has been received.");
+            window.location.href = 'feedback.html';
+        });
+    </script>
+</body>
+
+</html>
